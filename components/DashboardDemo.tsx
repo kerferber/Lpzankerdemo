@@ -48,6 +48,7 @@ const DashboardDemo: React.FC = () => {
                   src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
                   alt="Dashboard completo do sistema Zanker"
                   className="rounded-xl mx-auto transition-transform duration-400 hover:scale-102"
+                  loading="lazy"
               />
           </div>
           

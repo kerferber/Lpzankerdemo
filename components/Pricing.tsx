@@ -6,15 +6,51 @@ const CheckIcon = () => (
     </svg>
 );
 
+const plansData = [
+    {
+        name: 'Essencial',
+        prices: { monthly: 299, annual: 299 * 10 },
+        features: [
+            'Até 5 usuários',
+            'Até 10 projetos simultâneos',
+            'Módulos de Orçamento e Cronograma',
+            'Suporte via e-mail'
+        ],
+        buttonText: 'Começar com Essencial',
+    },
+    {
+        name: 'Profissional',
+        prices: { monthly: 599, annual: 599 * 10 },
+        features: [
+            'Até 15 usuários',
+            'Até 30 projetos simultâneos',
+            'Todos os módulos do Essencial +',
+            'Compras e Acompanhamento',
+            'Relatórios Avançados',
+            'Suporte Prioritário (Chat e E-mail)',
+        ],
+        buttonText: 'Escolher Profissional',
+        isPopular: true,
+    },
+    {
+        name: 'Enterprise',
+        prices: { monthly: 899, annual: 899 * 10 },
+        features: [
+            'Usuários ilimitados',
+            'Projetos ilimitados',
+            'Todos os módulos do Profissional +',
+            'Gestão de Escritório',
+            'Onboarding Personalizado',
+            'Gerente de Conta Dedicado',
+        ],
+        buttonText: 'Fale com um especialista',
+    },
+];
+
 const PlanCard: React.FC<{
-    plan: {
-        name: string;
-        price: string;
-        features: string[];
-        buttonText: string;
-        isPopular?: boolean;
-    }
-}> = ({ plan }) => {
+    plan: typeof plansData[0];
+    billingCycle: 'monthly' | 'annual';
+}> = ({ plan, billingCycle }) => {
     const cardClasses = `
         bg-white rounded-2xl p-8 transition-all duration-300 w-full flex flex-col h-full
         ${plan.isPopular ? 'border-2 border-primary shadow-2xl shadow-primary/20 transform lg:scale-105' : 'border border-slate-200 shadow-lg'}
@@ -23,6 +59,10 @@ const PlanCard: React.FC<{
         w-full py-3 px-6 rounded-lg font-semibold text-lg mt-8 transition-all duration-300 text-center
         ${plan.isPopular ? 'bg-primary text-white hover:bg-primary-dark shadow-md hover:shadow-lg hover:-translate-y-px' : 'bg-light-blue text-primary hover:bg-blue-200'}
     `;
+
+    const price = billingCycle === 'monthly' 
+        ? plan.prices.monthly 
+        : Math.round(plan.prices.annual / 12);
 
     return (
         <div className={cardClasses}>
@@ -35,8 +75,9 @@ const PlanCard: React.FC<{
             )}
             <h3 className="text-2xl font-bold text-text-main text-center">{plan.name}</h3>
             <div className="text-center mt-4">
-                <span className="text-5xl font-extrabold text-text-main">R${plan.price}</span>
+                <span className="text-5xl font-extrabold text-text-main">R${price}</span>
                 <span className="text-text-secondary">/mês</span>
+                 {billingCycle === 'annual' && <p className="text-sm text-primary font-semibold mt-1">Cobrado R${plan.prices.annual.toLocaleString('pt-BR')}/ano</p>}
             </div>
             <ul className="mt-8 space-y-4 flex-grow">
                 {plan.features.map((feature, index) => (
@@ -51,50 +92,11 @@ const PlanCard: React.FC<{
     );
 };
 
-const pricingPlans = [
-    {
-        name: 'Essencial',
-        price: '299',
-        features: [
-            'Até 5 usuários',
-            'Até 10 projetos simultâneos',
-            'Módulos de Orçamento e Cronograma',
-            'Suporte via e-mail'
-        ],
-        buttonText: 'Começar com Essencial',
-    },
-    {
-        name: 'Profissional',
-        price: '599',
-        features: [
-            'Até 15 usuários',
-            'Até 30 projetos simultâneos',
-            'Todos os módulos do Essencial +',
-            'Compras e Acompanhamento',
-            'Relatórios Avançados',
-            'Suporte Prioritário (Chat e E-mail)',
-        ],
-        buttonText: 'Escolher Profissional',
-        isPopular: true,
-    },
-    {
-        name: 'Enterprise',
-        price: '899',
-        features: [
-            'Usuários ilimitados',
-            'Projetos ilimitados',
-            'Todos os módulos do Profissional +',
-            'Gestão de Escritório',
-            'Onboarding Personalizado',
-            'Gerente de Conta Dedicado',
-        ],
-        buttonText: 'Fale com um especialista',
-    },
-];
 
 const Pricing: React.FC = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const [inView, setInView] = useState(false);
+    const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -122,10 +124,26 @@ const Pricing: React.FC = () => {
                         Escolha o plano ideal e comece a transformar a gestão das suas obras hoje mesmo.
                     </p>
                 </div>
-                <div className="mt-20 flex flex-col lg:flex-row items-center lg:items-end justify-center gap-8 lg:gap-4">
-                    {pricingPlans.map((plan, index) => (
+                <div className={`mt-10 flex justify-center items-center gap-4 transition-all duration-600 ease-out delay-100 ${inView ? 'opacity-100' : 'opacity-0'}`}>
+                    <span className={`font-semibold transition-colors ${billingCycle === 'monthly' ? 'text-primary' : 'text-text-secondary'}`}>Mensal</span>
+                    <button
+                        onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
+                        className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-light-blue`}
+                        role="switch"
+                        aria-checked={billingCycle === 'annual'}
+                    >
+                        <span className="sr-only">Alternar plano de pagamento</span>
+                        <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${billingCycle === 'annual' ? 'translate-x-5' : 'translate-x-0'}`} />
+                    </button>
+                    <span className={`font-semibold relative transition-colors ${billingCycle === 'annual' ? 'text-primary' : 'text-text-secondary'}`}>
+                        Anual
+                        <span className={`absolute -top-5 -right-2 sm:-right-4 text-xs font-bold px-2 py-0.5 rounded-full transform transition-all duration-300 ${billingCycle === 'annual' ? 'bg-green-100 text-green-700 -rotate-12 scale-100' : 'scale-0'}`}>2 meses grátis</span>
+                    </span>
+                </div>
+                <div className="mt-16 flex flex-col lg:flex-row items-center lg:items-end justify-center gap-8 lg:gap-4">
+                    {plansData.map((plan, index) => (
                         <div key={plan.name} className={`w-full max-w-sm relative transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: `${index * 150 + 200}ms`}}>
-                             <PlanCard plan={plan} />
+                             <PlanCard plan={plan} billingCycle={billingCycle} />
                         </div>
                     ))}
                 </div>

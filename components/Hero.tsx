@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
   }, []);
   
   return (
-    <section id="hero" className="pt-40 pb-24 bg-light-gray overflow-hidden">
+    <section id="hero" className="pt-40 pb-24 bg-gradient-to-b from-light-blue to-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="text-center lg:text-left">
@@ -42,7 +42,7 @@ const Hero: React.FC = () => {
             <div className="mt-8 flex flex-col items-center lg:items-start">
               <a
                 href="#cta"
-                className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-primary/40"
+                className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-primary/40 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
               >
                 Ver o sistema na prática
               </a>
@@ -69,9 +69,10 @@ const Hero: React.FC = () => {
                 src="https://images.pexels.com/photos/4348401/pexels-photo-4348401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="Dashboard do sistema Zanker"
                 className="rounded-xl shadow-xl relative z-10 animate-float"
+                loading="lazy"
               />
-              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-light-blue rounded-full z-0 hidden sm:block"></div>
-              <div className="absolute -top-8 -left-8 w-32 h-32 bg-light-gray rounded-full z-0 hidden sm:block"></div>
+              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-primary/10 rounded-full z-0 hidden sm:block"></div>
+              <div className="absolute -top-8 -left-8 w-32 h-32 bg-white rounded-full z-0 hidden sm:block"></div>
             </div>
           </div>
         </div>

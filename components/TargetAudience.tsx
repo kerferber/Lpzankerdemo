@@ -35,6 +35,7 @@ const TargetAudience: React.FC = () => {
     <section ref={sectionRef} id="target-audience" className="py-16 md:py-24 bg-light-blue overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+          <p className="text-primary font-semibold tracking-wider uppercase mb-2">Feito para você</p>
           <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Para escritórios que querem parar de reagir e começar a liderar.</h2>
           <p className="mt-4 text-lg text-text-secondary">
             Seja você um profissional autônomo, um escritório em crescimento ou uma grande construtora, temos a solução certa.

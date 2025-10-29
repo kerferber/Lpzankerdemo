@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import SocialProof from './components/SocialProof';
+import ClientLogos from './components/ClientLogos';
 import Features from './components/Features';
 import DashboardDemo from './components/DashboardDemo';
 import HowItWorks from './components/HowItWorks';
@@ -20,6 +21,7 @@ function App() {
       <main>
         <Hero />
         <SocialProof />
+        <ClientLogos />
         <Features />
         <DashboardDemo />
         <HowItWorks />

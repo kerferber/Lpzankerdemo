@@ -6,18 +6,26 @@ const StarIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
+const LinkedInIcon: React.FC = () => (
+    <svg className="w-5 h-5 text-slate-400 group-hover:text-primary transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+    </svg>
+);
+
 const TestimonialCard: React.FC<{ name: string; role: string; avatar: string; quote: string; }> = ({ name, role, avatar, quote }) => (
-    <div className="bg-light-blue p-8 rounded-xl relative overflow-hidden h-full">
+    <div className="bg-light-blue p-8 rounded-xl relative overflow-hidden h-full flex flex-col">
         <div className="absolute -top-1 -left-2 text-primary/10" aria-hidden="true">
             <svg width="100" height="100" viewBox="0 0 24 24"><path fill="currentColor" d="M10 7L8 11H11V17H5V11L7 7M18 7L16 11H19V17H13V11L15 7Z"/></svg>
         </div>
-        <div className="relative z-10">
+        <div className="relative z-10 flex-grow">
             <div className="flex mb-4">
                 {[...Array(5)].map((_, i) => <StarIcon key={i} className="w-5 h-5 text-yellow-400" />)}
             </div>
             <blockquote className="text-lg text-text-main mb-6 font-medium">
                 "{quote}"
             </blockquote>
+        </div>
+        <div className="relative z-10 flex items-center justify-between mt-auto">
             <div className="flex items-center">
                 <img src={avatar} alt={name} className="w-14 h-14 rounded-full mr-4 object-cover" />
                 <div>
@@ -25,6 +33,9 @@ const TestimonialCard: React.FC<{ name: string; role: string; avatar: string; qu
                     <p className="text-text-secondary">{role}</p>
                 </div>
             </div>
+             <a href="#" className="group" aria-label={`Perfil de ${name} no LinkedIn`}>
+                <LinkedInIcon />
+            </a>
         </div>
     </div>
 );

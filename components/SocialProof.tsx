@@ -87,19 +87,19 @@ const SocialProof: React.FC = () => {
         </div>
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '200ms'}}>
-            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4">
+            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4 transition-transform duration-300 hover:scale-110">
               <ArchitectIcon />
             </div>
             <h3 className="mt-2 text-xl font-semibold text-text-main">Arquitetos</h3>
           </div>
           <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '300ms'}}>
-            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4">
+            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4 transition-transform duration-300 hover:scale-110">
               <EngineerIcon />
             </div>
             <h3 className="mt-2 text-xl font-semibold text-text-main">Engenheiros</h3>
           </div>
           <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '400ms'}}>
-            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4">
+            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4 transition-transform duration-300 hover:scale-110">
               <ConstructionIcon />
             </div>
             <h3 className="mt-2 text-xl font-semibold text-text-main">Construtoras</h3>
