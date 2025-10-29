@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const faqData = [
   {
@@ -54,21 +54,40 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer, isOpen, onClick }) 
 
 const Faq: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section id="faq" className="py-24 bg-light-blue">
+    <section ref={sectionRef} id="faq" className="py-16 md:py-24 bg-light-gray overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-4xl font-extrabold text-text-main tracking-tight">Perguntas Frequentes</h2>
+        <div className={`text-center max-w-3xl mx-auto transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+          <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Perguntas Frequentes</h2>
           <p className="mt-4 text-lg text-text-secondary">
             Tire suas dúvidas sobre nossa plataforma e veja como podemos ajudar seu negócio a crescer.
           </p>
         </div>
-        <div className="mt-12 max-w-3xl mx-auto bg-white/50 p-4 sm:p-8 rounded-xl">
+        <div className={`mt-12 max-w-3xl mx-auto bg-white/50 p-4 sm:p-8 rounded-xl transition-all duration-600 ease-out delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           {faqData.map((item, index) => (
             <FaqItem
               key={index}

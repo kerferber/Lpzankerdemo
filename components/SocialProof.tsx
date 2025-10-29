@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const AnimatedCounter: React.FC<{ end: number, duration?: number }> = ({ end, duration = 2000 }) => {
     const [count, setCount] = React.useState(0);
@@ -54,29 +54,51 @@ const ConstructionIcon = () => (
 );
 
 const SocialProof: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-24 bg-light-blue">
+    <section ref={sectionRef} className="py-16 md:py-24 bg-light-blue overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl lg:text-4xl font-bold text-text-main tracking-tight">
-          Mais de <span className="text-primary"><AnimatedCounter end={500} /></span> escritórios e construtoras já controlam suas obras com <span className="font-extrabold">Zanker</span>
-        </h2>
-        <p className="mt-4 text-lg text-text-secondary max-w-3xl mx-auto">
-          Junte-se a profissionais que transformaram a gestão de seus projetos e negócios.
-        </p>
+        <div className={`transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+          <h2 className="text-3xl lg:text-4xl font-bold text-text-main tracking-tight leading-tight">
+            Mais de <span className="text-primary"><AnimatedCounter end={500} /></span> escritórios e construtoras já controlam suas obras com <span className="font-extrabold">Zanker</span>
+          </h2>
+          <p className="mt-4 text-lg text-text-secondary max-w-3xl mx-auto">
+            Junte-se a profissionais que transformaram a gestão de seus projetos e negócios.
+          </p>
+        </div>
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className="flex flex-col items-center p-6">
+          <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '200ms'}}>
             <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4">
               <ArchitectIcon />
             </div>
             <h3 className="mt-2 text-xl font-semibold text-text-main">Arquitetos</h3>
           </div>
-          <div className="flex flex-col items-center p-6">
+          <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '300ms'}}>
             <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4">
               <EngineerIcon />
             </div>
             <h3 className="mt-2 text-xl font-semibold text-text-main">Engenheiros</h3>
           </div>
-          <div className="flex flex-col items-center p-6">
+          <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '400ms'}}>
             <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4">
               <ConstructionIcon />
             </div>

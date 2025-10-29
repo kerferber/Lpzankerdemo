@@ -2,10 +2,10 @@ import React from 'react';
 
 const FinalCta: React.FC = () => {
   return (
-    <section id="cta" className="py-24 sm:py-32 bg-white">
+    <section id="cta" className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative isolate overflow-hidden bg-primary-dark px-6 py-20 text-center shadow-2xl rounded-3xl sm:px-16">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+        <div className="relative isolate overflow-hidden bg-primary px-8 py-20 text-center shadow-2xl rounded-3xl sm:px-16">
+            <h2 className="text-3xl font-extrabold text-white tracking-tight leading-tight">
               Deixe de correr atrás e comece a liderar a obra.
             </h2>
             <p className="mt-4 text-lg text-blue-100 max-w-2xl mx-auto">
@@ -14,7 +14,7 @@ const FinalCta: React.FC = () => {
             <div className="mt-10">
               <a
                 href="#"
-                className="inline-block bg-white text-primary px-10 py-5 rounded-lg font-semibold text-xl hover:bg-blue-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="inline-block bg-white text-primary px-10 py-4 rounded-lg font-semibold text-xl hover:bg-indigo-100 transition-colors duration-300"
               >
                 Quero ver o painel em ação.
               </a>

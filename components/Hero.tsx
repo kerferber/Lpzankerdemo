@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const CheckCircleIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -7,18 +7,39 @@ const CheckCircleIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 const Hero: React.FC = () => {
+  const bulletsRef = useRef<HTMLDivElement>(null);
+  const [bulletsInView, setBulletsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setBulletsInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (bulletsRef.current) {
+      observer.observe(bulletsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+  
   return (
-    <section id="hero" className="pt-32 pb-20 bg-white overflow-hidden">
+    <section id="hero" className="pt-40 pb-24 bg-light-gray overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="text-center lg:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-main leading-tight tracking-tighter">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-text-main leading-tight tracking-tighter">
               Sua obra sob controle — do <span className="text-primary">orçamento</span> à <span className="text-primary">entrega</span>.
             </h1>
-            <p className="mt-6 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0">
-              Gerencie todas as etapas do seu projeto em uma plataforma integrada, visual e fácil de usar. Chega de planilhas e informações perdidas.
+            <p className="mt-4 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0">
+              Gerencie todas as etapas do seu projeto em uma plataforma integrada, visual e fácil de usar. Chega de planhas e informações perdidas.
             </p>
-            <div className="mt-10 flex justify-center lg:justify-start">
+            <div className="mt-8 flex justify-center lg:justify-start">
               <a
                 href="#cta"
                 className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-primary/40"
@@ -26,17 +47,17 @@ const Hero: React.FC = () => {
                 Ver o sistema na prática
               </a>
             </div>
-            <div className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-8">
-              <div className="flex items-center">
-                <CheckCircleIcon className="w-6 h-6 text-primary mr-2" />
+            <div ref={bulletsRef} className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:gap-8">
+              <div className={`flex items-center gap-3 transition-all duration-600 ease-out ${bulletsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+                <CheckCircleIcon className="w-7 h-7 text-primary" />
                 <span className="text-slate-600 font-medium">Reduza até 18% de desperdício de material.</span>
               </div>
-              <div className="flex items-center">
-                <CheckCircleIcon className="w-6 h-6 text-primary mr-2" />
+              <div className={`flex items-center gap-3 transition-all duration-600 ease-out delay-200 ${bulletsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+                <CheckCircleIcon className="w-7 h-7 text-primary" />
                 <span className="text-slate-600 font-medium">Elimine surpresas no cronograma físico-financeiro.</span>
               </div>
-              <div className="flex items-center">
-                <CheckCircleIcon className="w-6 h-6 text-primary mr-2" />
+              <div className={`flex items-center gap-3 transition-all duration-600 ease-out delay-300 ${bulletsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+                <CheckCircleIcon className="w-7 h-7 text-primary" />
                 <span className="text-slate-600 font-medium">Controle total</span>
               </div>
             </div>

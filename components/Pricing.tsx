@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const CheckIcon = () => (
     <svg className="w-5 h-5 text-primary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -16,7 +16,7 @@ const PlanCard: React.FC<{
     }
 }> = ({ plan }) => {
     const cardClasses = `
-        bg-white rounded-2xl p-8 transition-all duration-300 w-full flex flex-col
+        bg-white rounded-2xl p-8 transition-all duration-300 w-full flex flex-col h-full
         ${plan.isPopular ? 'border-2 border-primary shadow-2xl shadow-primary/20 transform lg:scale-105' : 'border border-slate-200 shadow-lg'}
     `;
     const buttonClasses = `
@@ -93,18 +93,38 @@ const pricingPlans = [
 ];
 
 const Pricing: React.FC = () => {
+    const sectionRef = useRef<HTMLElement>(null);
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setInView(true);
+              observer.disconnect();
+            }
+          },
+          { threshold: 0.1 }
+        );
+    
+        if (sectionRef.current) {
+          observer.observe(sectionRef.current);
+        }
+        return () => observer.disconnect();
+      }, []);
+
     return (
-        <section id="pricing" className="py-24 bg-light-gray">
+        <section ref={sectionRef} id="pricing" className="py-16 md:py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center max-w-3xl mx-auto">
-                    <h2 className="text-4xl font-extrabold text-text-main tracking-tight">Planos transparentes para o tamanho do seu negócio</h2>
+                <div className={`text-center max-w-3xl mx-auto transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+                    <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Planos transparentes para o tamanho do seu negócio</h2>
                     <p className="mt-4 text-lg text-text-secondary">
                         Escolha o plano ideal e comece a transformar a gestão das suas obras hoje mesmo.
                     </p>
                 </div>
                 <div className="mt-20 flex flex-col lg:flex-row items-center lg:items-end justify-center gap-8 lg:gap-4">
-                    {pricingPlans.map((plan) => (
-                        <div key={plan.name} className="w-full max-w-sm relative">
+                    {pricingPlans.map((plan, index) => (
+                        <div key={plan.name} className={`w-full max-w-sm relative transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: `${index * 150 + 200}ms`}}>
                              <PlanCard plan={plan} />
                         </div>
                     ))}
