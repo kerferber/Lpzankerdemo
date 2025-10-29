@@ -33,13 +33,13 @@ const Hero: React.FC = () => {
       <div ref={sectionRef} className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="text-center lg:text-left">
-            <h1 className={`text-4xl md:text-5xl font-extrabold text-text-main leading-tight tracking-tighter ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}>
+            <h1 className={`text-4xl md:text-5xl font-extrabold text-text-main leading-tight tracking-tighter transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
               Entrega de <span className="text-primary">obras</span> no prazo. <span className="text-primary">Orçamento</span> sob controle. <span className="text-primary">Escritório</span> em pleno comando.
             </h1>
-            <p className={`mt-4 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0 ${inView ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '200ms'}}>
+            <p className={`mt-4 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0 transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '200ms'}}>
               Planeje, execute e controle seus projetos de engenharia e arquitetura — em um painel único, pensado para quem está no canteiro e no escritório.
             </p>
-            <div className={`mt-8 flex flex-col items-center lg:items-start ${inView ? 'animate-fade-in-up' : 'opacity-0'}`} style={{ animationDelay: '400ms'}}>
+            <div className={`mt-8 flex flex-col items-center lg:items-start transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '400ms'}}>
               <a
                 href="#cta"
                 className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-primary/40 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
@@ -64,7 +64,7 @@ const Hero: React.FC = () => {
             </div>
           </div>
           <div className="flex justify-center mt-12 lg:mt-0">
-            <div className={`relative ${inView ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: '300ms'}}>
+            <div className={`relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{ transitionDelay: '300ms'}}>
               <img
                 src="https://images.pexels.com/photos/4348401/pexels-photo-4348401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="Dashboard do sistema Zanker"

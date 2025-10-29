@@ -30,12 +30,12 @@ const ClientLogos: React.FC = () => {
   return (
     <section ref={sectionRef} className="py-16 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className={`text-center text-lg font-semibold text-text-secondary tracking-wider ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}>
+        <h2 className={`text-center text-lg font-semibold text-text-secondary tracking-wider transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           Empresas que confiam na Zanker para gerenciar suas obras
         </h2>
         <div className={`mt-8 flex flex-wrap justify-center items-center gap-x-12 gap-y-8`}>
           {['ARQTEC', 'ENG.', 'CONSTRUCT', 'PROJETO', 'INNOVA'].map((name, index) => (
-            <div key={index} className={`grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300 ${inView ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: `${index * 100 + 200}ms` }}>
+            <div key={index} className={`grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 ease-out ${inView ? 'opacity-60 scale-100' : 'opacity-0 scale-90'}`} style={{ transitionDelay: `${index * 100 + 200}ms` }}>
                 <LogoPlaceholder name={name} />
             </div>
           ))}

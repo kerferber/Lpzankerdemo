@@ -31,7 +31,7 @@ const HowItWorks: React.FC = () => {
   return (
     <section ref={sectionRef} id="how-it-works" className="py-16 md:py-24 bg-light-gray overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center max-w-3xl mx-auto ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}>
+        <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <p className="text-primary font-semibold tracking-wider uppercase mb-2">Nosso Processo</p>
           <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Do orçamento à entrega — o fluxo completo, simplificado.</h2>
           <p className="mt-4 text-lg text-text-secondary">
@@ -43,7 +43,7 @@ const HowItWorks: React.FC = () => {
             <div className="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-slate-200" aria-hidden="true"></div>
             <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
               {steps.map((step, index) => (
-                <div key={step.number} className={`text-center ${inView ? 'animate-fade-in-up' : 'opacity-0'}`} style={{animationDelay: `${index * 150 + 200}ms`}}>
+                <div key={step.number} className={`text-center transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: `${index * 150 + 200}ms`}}>
                   <div className={`relative z-10 flex items-center justify-center w-16 h-16 mx-auto bg-white rounded-full border-4 border-primary shadow-lg transition-transform duration-500 ${inView ? 'scale-100' : 'scale-0'}`} style={{transitionDelay: `${index * 150 + 300}ms`}}>
                     <span className="text-2xl font-bold text-primary">{step.number}</span>
                   </div>

@@ -25,17 +25,17 @@ const FinalCta: React.FC = () => {
     <section id="cta" className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={sectionRef} className="relative isolate overflow-hidden bg-gradient-to-br from-primary to-blue-700 px-8 py-20 text-center shadow-2xl rounded-3xl sm:px-16">
-            <div className={inView ? 'animate-fade-in-up' : 'opacity-0'}>
+            <div className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
               <h2 className="text-3xl font-extrabold text-white tracking-tight leading-tight">
                 Deixe de correr atrás e comece a liderar a obra.
               </h2>
             </div>
-            <div className={inView ? 'animate-fade-in-up' : 'opacity-0'} style={{animationDelay: '200ms'}}>
+            <div className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '200ms'}}>
               <p className="mt-4 text-lg text-blue-100 max-w-2xl mx-auto">
                 Descubra como nossa plataforma pode economizar seu tempo, reduzir custos e dar mais visibilidade aos seus projetos.
               </p>
             </div>
-            <div className={`mt-10 ${inView ? 'animate-fade-in-up' : 'opacity-0'}`} style={{animationDelay: '400ms'}}>
+            <div className={`mt-10 transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '400ms'}}>
               <a
                 href="#"
                 className="inline-block bg-white text-primary px-10 py-4 rounded-lg font-semibold text-xl hover:bg-light-blue transition-colors duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/80"

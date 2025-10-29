@@ -65,14 +65,14 @@ const Testimonials: React.FC = () => {
   return (
     <section ref={sectionRef} id="testimonials" className="py-16 md:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center max-w-3xl mx-auto ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}>
+        <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">‘Hoje eu sei exatamente onde estou perdendo dinheiro’</h2>
           <p className="mt-4 text-lg text-text-secondary">
             A confiança de quem usa e aprova nossa plataforma é nosso maior ativo.
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          <div className={`${inView ? 'animate-slide-in-from-left' : 'opacity-0'}`} style={{animationDelay: '200ms'}}>
+          <div className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`} style={{transitionDelay: '200ms'}}>
             <TestimonialCard 
               name="João Silva"
               role="Engenheiro Civil, Construtora Exemplo"
@@ -80,7 +80,7 @@ const Testimonials: React.FC = () => {
               quote="Antes era tudo em planilha e WhatsApp — eu só descobria o problema quando já tinha estourado. Hoje abro o sistema de manhã e tenho um relatório claro de custo, prazo e compras pendentes. Zero adivinhação."
             />
           </div>
-          <div className={`${inView ? 'animate-slide-in-from-right' : 'opacity-0'}`} style={{animationDelay: '300ms'}}>
+          <div className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`} style={{transitionDelay: '300ms'}}>
            <TestimonialCard 
             name="Mariana Costa"
             role="Arquiteta, MC Arquitetura"
