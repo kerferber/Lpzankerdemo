@@ -34,7 +34,7 @@ const DashboardDemo: React.FC = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="demo" className="py-16 md:py-24 bg-light-gray overflow-hidden">
+    <section ref={sectionRef} id="demo" className="py-16 md:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Veja exatamente onde custo, prazo e qualidade fogem ao controle — e como retomar o comando hoje.</h2>
@@ -43,11 +43,11 @@ const DashboardDemo: React.FC = () => {
           </p>
         </div>
         <div className={`mt-16 relative transition-all duration-600 ease-out delay-300 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-          <div className="bg-slate-200 rounded-2xl p-2 sm:p-4 shadow-mockup max-w-5xl mx-auto">
+          <div className="bg-slate-200 rounded-xl p-2 sm:p-4 shadow-mockup max-w-5xl mx-auto">
               <img 
                   src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
                   alt="Dashboard completo do sistema Zanker"
-                  className="rounded-2xl mx-auto transition-transform duration-400 hover:scale-102"
+                  className="rounded-xl mx-auto transition-transform duration-400 hover:scale-102"
               />
           </div>
           

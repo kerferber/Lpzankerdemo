@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const CheckIcon = () => (
-    <svg className="w-5 h-5 text-primary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+    <svg className="w-5 h-5 text-primary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
     </svg>
 );
 
@@ -114,7 +114,7 @@ const Pricing: React.FC = () => {
       }, []);
 
     return (
-        <section ref={sectionRef} id="pricing" className="py-16 md:py-24 bg-white overflow-hidden">
+        <section ref={sectionRef} id="pricing" className="py-16 md:py-24 bg-light-blue overflow-hidden">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className={`text-center max-w-3xl mx-auto transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
                     <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Planos transparentes para o tamanho do seu negócio</h2>

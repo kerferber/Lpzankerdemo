@@ -39,13 +39,14 @@ const Hero: React.FC = () => {
             <p className="mt-4 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0">
               Gerencie todas as etapas do seu projeto em uma plataforma integrada, visual e fácil de usar. Chega de planhas e informações perdidas.
             </p>
-            <div className="mt-8 flex justify-center lg:justify-start">
+            <div className="mt-8 flex flex-col items-center lg:items-start">
               <a
                 href="#cta"
                 className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-primary/40"
               >
                 Ver o sistema na prática
               </a>
+              <p className="mt-3 text-sm text-text-secondary">Sem cartão de crédito. Sem compromisso.</p>
             </div>
             <div ref={bulletsRef} className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:gap-8">
               <div className={`flex items-center gap-3 transition-all duration-600 ease-out ${bulletsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
@@ -67,8 +68,7 @@ const Hero: React.FC = () => {
               <img
                 src="https://images.pexels.com/photos/4348401/pexels-photo-4348401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="Dashboard do sistema Zanker"
-                className="rounded-lg shadow-2xl relative z-10 animate-float"
-                style={{boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 15px rgba(37, 99, 235, 0.1)'}}
+                className="rounded-xl shadow-xl relative z-10 animate-float"
               />
               <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-light-blue rounded-full z-0 hidden sm:block"></div>
               <div className="absolute -top-8 -left-8 w-32 h-32 bg-light-gray rounded-full z-0 hidden sm:block"></div>

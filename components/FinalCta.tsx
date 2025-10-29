@@ -14,7 +14,7 @@ const FinalCta: React.FC = () => {
             <div className="mt-10">
               <a
                 href="#"
-                className="inline-block bg-white text-primary px-10 py-4 rounded-lg font-semibold text-xl hover:bg-indigo-100 transition-colors duration-300"
+                className="inline-block bg-white text-primary px-10 py-4 rounded-lg font-semibold text-xl hover:bg-light-blue transition-colors duration-300"
               >
                 Quero ver o painel em ação.
               </a>

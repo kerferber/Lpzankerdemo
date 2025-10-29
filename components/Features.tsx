@@ -55,7 +55,7 @@ const Features: React.FC = () => {
   }, []);
 
   return (
-    <section id="features" className="py-16 md:py-24 bg-white overflow-hidden">
+    <section id="features" className="py-16 md:py-24 bg-light-gray overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={sectionRef} className="text-center max-w-3xl mx-auto">
           <h2 className={`text-4xl font-extrabold text-text-main tracking-tight leading-tight transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>As funcionalidades essenciais para você gerenciar obras, equipes e custos — sem complicação.</h2>
