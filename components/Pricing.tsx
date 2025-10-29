@@ -118,7 +118,7 @@ const Pricing: React.FC = () => {
     return (
         <section ref={sectionRef} id="pricing" className="py-16 md:py-24 bg-light-blue overflow-hidden">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className={`text-center max-w-3xl mx-auto transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+                <div className={`text-center max-w-3xl mx-auto ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}>
                     <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Planos transparentes para o tamanho do seu negócio</h2>
                     <p className="mt-4 text-lg text-text-secondary">
                         Escolha o plano ideal e comece a transformar a gestão das suas obras hoje mesmo.
@@ -142,7 +142,7 @@ const Pricing: React.FC = () => {
                 </div>
                 <div className="mt-16 flex flex-col lg:flex-row items-center lg:items-end justify-center gap-8 lg:gap-4">
                     {plansData.map((plan, index) => (
-                        <div key={plan.name} className={`w-full max-w-sm relative transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: `${index * 150 + 200}ms`}}>
+                        <div key={plan.name} className={`w-full max-w-sm relative ${inView ? 'animate-scale-in' : 'opacity-0'}`} style={{animationDelay: `${index * 150 + 200}ms`}}>
                              <PlanCard plan={plan} billingCycle={billingCycle} />
                         </div>
                     ))}

@@ -1,17 +1,41 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const FinalCta: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="cta" className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative isolate overflow-hidden bg-gradient-to-br from-primary to-blue-700 px-8 py-20 text-center shadow-2xl rounded-3xl sm:px-16">
-            <h2 className="text-3xl font-extrabold text-white tracking-tight leading-tight">
-              Deixe de correr atrás e comece a liderar a obra.
-            </h2>
-            <p className="mt-4 text-lg text-blue-100 max-w-2xl mx-auto">
-              Descubra como nossa plataforma pode economizar seu tempo, reduzir custos e dar mais visibilidade aos seus projetos.
-            </p>
-            <div className="mt-10">
+        <div ref={sectionRef} className="relative isolate overflow-hidden bg-gradient-to-br from-primary to-blue-700 px-8 py-20 text-center shadow-2xl rounded-3xl sm:px-16">
+            <div className={inView ? 'animate-fade-in-up' : 'opacity-0'}>
+              <h2 className="text-3xl font-extrabold text-white tracking-tight leading-tight">
+                Deixe de correr atrás e comece a liderar a obra.
+              </h2>
+            </div>
+            <div className={inView ? 'animate-fade-in-up' : 'opacity-0'} style={{animationDelay: '200ms'}}>
+              <p className="mt-4 text-lg text-blue-100 max-w-2xl mx-auto">
+                Descubra como nossa plataforma pode economizar seu tempo, reduzir custos e dar mais visibilidade aos seus projetos.
+              </p>
+            </div>
+            <div className={`mt-10 ${inView ? 'animate-fade-in-up' : 'opacity-0'}`} style={{animationDelay: '400ms'}}>
               <a
                 href="#"
                 className="inline-block bg-white text-primary px-10 py-4 rounded-lg font-semibold text-xl hover:bg-light-blue transition-colors duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/80"
