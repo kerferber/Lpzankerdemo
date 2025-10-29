@@ -89,13 +89,18 @@ const Faq: React.FC = () => {
         </div>
         <div className={`mt-12 max-w-3xl mx-auto bg-white/50 p-4 sm:p-8 rounded-xl transition-all duration-600 ease-out delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           {faqData.map((item, index) => (
-            <FaqItem
-              key={index}
-              question={item.question}
-              answer={item.answer}
-              isOpen={openIndex === index}
-              onClick={() => handleToggle(index)}
-            />
+            <div 
+              key={index} 
+              className={`transition-all duration-500 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} 
+              style={{transitionDelay: `${index * 100 + 300}ms`}}
+            >
+              <FaqItem
+                question={item.question}
+                answer={item.answer}
+                isOpen={openIndex === index}
+                onClick={() => handleToggle(index)}
+              />
+            </div>
           ))}
         </div>
       </div>
