@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl font-extrabold text-text-main leading-tight tracking-tighter">
-              Entrega de obras no prazo. Orçamento sob controle. Escritório em pleno comando.
+              Entrega de <span className="text-primary">obras</span> no prazo. <span className="text-primary">Orçamento</span> sob controle. <span className="text-primary">Escritório</span> em pleno comando.
             </h1>
             <p className="mt-4 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0">
               Planeje, execute e controle seus projetos de engenharia e arquitetura — em um painel único, pensado para quem está no canteiro e no escritório.
