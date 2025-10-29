@@ -124,7 +124,7 @@ const Pricing: React.FC = () => {
                         Escolha o plano ideal e comece a transformar a gestão das suas obras hoje mesmo.
                     </p>
                 </div>
-                <div className={`mt-10 flex justify-center items-center gap-4 transition-all duration-600 ease-out delay-100 ${inView ? 'opacity-100' : 'opacity-0'}`}>
+                <div id="pricing-selector" className={`mt-10 flex justify-center items-center gap-4 transition-all duration-600 ease-out delay-100 ${inView ? 'opacity-100' : 'opacity-0'}`}>
                     <span className={`font-semibold transition-colors ${billingCycle === 'monthly' ? 'text-primary' : 'text-text-secondary'}`}>Mensal</span>
                     <button
                         onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}

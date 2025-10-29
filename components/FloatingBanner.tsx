@@ -4,25 +4,21 @@ const FloatingBanner: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     
     useEffect(() => {
-        const pricingSection = document.getElementById('pricing');
+        const pricingSelector = document.getElementById('pricing-selector');
 
         const toggleVisibility = () => {
-            if (!pricingSection) {
-                // Fallback behavior if the pricing section isn't found
-                const fallbackVisible = window.scrollY > 500 && window.scrollY < (document.documentElement.scrollHeight - 1200);
-                setIsVisible(fallbackVisible);
+            const hasScrolledEnough = window.scrollY > 500;
+            
+            if (!pricingSelector) {
+                // Fallback behavior if the pricing selector isn't found
+                setIsVisible(hasScrolledEnough);
                 return;
             }
             
-            // The top of the pricing section relative to the viewport
-            const pricingSectionTop = pricingSection.getBoundingClientRect().top;
+            // Disappears when the top of the selector is at or above the viewport bottom edge
+            const selectorIsInView = pricingSelector.getBoundingClientRect().top <= window.innerHeight;
 
-            // The banner is visible if:
-            // 1. We have scrolled down more than 500px.
-            // 2. The top of the pricing section is still below the bottom edge of the viewport (not yet visible).
-            const shouldBeVisible = window.scrollY > 500 && pricingSectionTop > window.innerHeight;
-
-            setIsVisible(shouldBeVisible);
+            setIsVisible(hasScrolledEnough && !selectorIsInView);
         };
 
         window.addEventListener('scroll', toggleVisibility, { passive: true });
@@ -33,7 +29,7 @@ const FloatingBanner: React.FC = () => {
 
     return (
         <div className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-4 sm:pb-6 transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
-            <div className="relative max-w-lg mx-auto bg-primary p-4 sm:p-5 rounded-2xl shadow-2xl">
+            <div className="relative max-w-lg mx-auto bg-primary/95 backdrop-blur-sm p-4 sm:p-5 rounded-2xl shadow-2xl border border-white/20">
                 <div className="flex items-center justify-between gap-4">
                     <div>
                         <p className="font-semibold text-white text-base sm:text-lg">
