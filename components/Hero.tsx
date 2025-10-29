@@ -29,11 +29,11 @@ const Hero: React.FC = () => {
             <div className="mt-12 flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-8">
               <div className="flex items-center">
                 <CheckCircleIcon className="w-6 h-6 text-primary mr-2" />
-                <span className="text-slate-600 font-medium">Economia de custos</span>
+                <span className="text-slate-600 font-medium">Reduza até 18% de desperdício de material.</span>
               </div>
               <div className="flex items-center">
                 <CheckCircleIcon className="w-6 h-6 text-primary mr-2" />
-                <span className="text-slate-600 font-medium">Obras dentro do prazo</span>
+                <span className="text-slate-600 font-medium">Elimine surpresas no cronograma físico-financeiro.</span>
               </div>
               <div className="flex items-center">
                 <CheckCircleIcon className="w-6 h-6 text-primary mr-2" />

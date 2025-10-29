@@ -39,7 +39,7 @@ const Features: React.FC = () => {
     <section id="features" className="py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-4xl font-extrabold text-text-main tracking-tight">Tudo que você precisa para uma gestão eficiente</h2>
+          <h2 className="text-4xl font-extrabold text-text-main tracking-tight">As funcionalidades essenciais para você gerenciar obras, equipes e custos — sem complicação.</h2>
           <p className="mt-4 text-lg text-text-secondary">
             Desde o planejamento inicial até a entrega final, nossa plataforma oferece as ferramentas certas para cada etapa do seu projeto.
           </p>

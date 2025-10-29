@@ -35,6 +35,7 @@ const Header: React.FC = () => {
             <a href="#features" className="text-text-secondary hover:text-primary transition-colors font-medium">Funcionalidades</a>
             <a href="#how-it-works" className="text-text-secondary hover:text-primary transition-colors font-medium">Como funciona</a>
             <a href="#target-audience" className="text-text-secondary hover:text-primary transition-colors font-medium">Para quem é</a>
+            <a href="#pricing" className="text-text-secondary hover:text-primary transition-colors font-medium">Planos</a>
             <a href="#faq" className="text-text-secondary hover:text-primary transition-colors font-medium">FAQ</a>
           </nav>
           <div className="flex items-center">

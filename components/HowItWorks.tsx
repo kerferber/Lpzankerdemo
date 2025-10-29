@@ -1,10 +1,10 @@
 import React from 'react';
 
 const steps = [
-  { number: 1, title: 'Planeje', description: 'Defina orçamentos, crie cronogramas e aloque recursos antes de começar.' },
-  { number: 2, title: 'Execute', description: 'Gerencie compras, acompanhe o diário de obras e centralize a comunicação.' },
-  { number: 3, title: 'Controle', description: 'Monitore o avanço, compare previsto vs. realizado e ajuste o curso.' },
-  { number: 4, title: 'Relate', description: 'Gere relatórios automáticos e apresente resultados com confiança.' },
+  { number: 1, title: 'Planeje', description: 'Crie orçamento, defina etapas e cronograma em minutos.' },
+  { number: 2, title: 'Execute', description: 'Registre avanços, custos e status direto do canteiro.' },
+  { number: 3, title: 'Controle', description: 'Compare o previsto com o realizado e ajuste antes que vire retrabalho.' },
+  { number: 4, title: 'Relate', description: 'Gere relatórios para seu cliente em 1 clique — profissional e transparente.' },
 ];
 
 const HowItWorks: React.FC = () => {

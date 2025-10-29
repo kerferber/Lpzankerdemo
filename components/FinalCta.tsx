@@ -6,7 +6,7 @@ const FinalCta: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative isolate overflow-hidden bg-primary-dark px-6 py-20 text-center shadow-2xl rounded-3xl sm:px-16">
             <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-              Controle total da sua obra começa aqui.
+              Deixe de correr atrás e comece a liderar a obra.
             </h2>
             <p className="mt-4 text-lg text-blue-100 max-w-2xl mx-auto">
               Descubra como nossa plataforma pode economizar seu tempo, reduzir custos e dar mais visibilidade aos seus projetos.
@@ -16,7 +16,7 @@ const FinalCta: React.FC = () => {
                 href="#"
                 className="inline-block bg-white text-primary px-10 py-5 rounded-lg font-semibold text-xl hover:bg-blue-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
-                Ver demonstração gratuita
+                Quero ver o painel em ação.
               </a>
               <p className="mt-4 text-sm text-blue-200">Sem cartão de crédito. Sem compromisso.</p>
             </div>

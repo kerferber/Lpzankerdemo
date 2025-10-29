@@ -17,9 +17,9 @@ const DashboardDemo: React.FC = () => {
     <section id="demo" className="py-24 bg-light-blue">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-4xl font-extrabold text-text-main tracking-tight">Visualize o sucesso do seu projeto</h2>
+          <h2 className="text-4xl font-extrabold text-text-main tracking-tight">Veja exatamente onde custo, prazo e qualidade fogem ao controle — e como retomar o comando hoje.</h2>
           <p className="mt-4 text-lg text-text-secondary">
-            Acompanhe indicadores chave em tempo real com um dashboard intuitivo que transforma dados complexos em insights acionáveis.
+            Planeje, execute e controle projetos de engenharia e arquitetura — tudo em um painel criado para quem está no canteiro e no escritório.
           </p>
         </div>
         <div className="mt-16 relative">
