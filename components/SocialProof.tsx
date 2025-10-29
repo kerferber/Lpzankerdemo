@@ -79,7 +79,7 @@ const SocialProof: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className={`transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <h2 className="text-3xl lg:text-4xl font-bold text-text-main tracking-tight leading-tight">
-            Mais de <span className="text-primary"><AnimatedCounter end={500} /></span> escritórios e construtoras já controlam suas obras com <span className="font-extrabold">Zanker</span>
+            Mais de <span className="text-primary"><AnimatedCounter end={500} /></span> escritórios de engenharia já usam a Zanker para entregar no prazo e dentro do orçamento.
           </h2>
           <p className="mt-4 text-lg text-text-secondary max-w-3xl mx-auto">
             Junte-se a profissionais que transformaram a gestão de seus projetos e negócios.
