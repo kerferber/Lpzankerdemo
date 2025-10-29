@@ -1,0 +1,43 @@
+import React from 'react';
+
+const Tooltip: React.FC<{ text: string; position: string; delay: string }> = ({ text, position, delay }) => (
+    <div className={`absolute ${position} hidden lg:block transform transition-all opacity-0 animate-fade-in-up ${delay}`} style={{animationFillMode: 'forwards'}}>
+        <div className="bg-white p-3 rounded-lg shadow-xl flex items-center space-x-2">
+            <span className="h-2 w-2 bg-green-500 rounded-full flex-shrink-0 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            </span>
+            <p className="text-sm font-semibold text-primary whitespace-nowrap">{text}</p>
+        </div>
+    </div>
+);
+
+
+const DashboardDemo: React.FC = () => {
+  return (
+    <section id="demo" className="py-24 bg-light-blue">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-4xl font-extrabold text-text-main tracking-tight">Visualize o sucesso do seu projeto</h2>
+          <p className="mt-4 text-lg text-text-secondary">
+            Acompanhe indicadores chave em tempo real com um dashboard intuitivo que transforma dados complexos em insights acionáveis.
+          </p>
+        </div>
+        <div className="mt-16 relative">
+          <div className="bg-slate-200 rounded-xl p-2 sm:p-4 shadow-2xl max-w-5xl mx-auto">
+              <img 
+                  src="https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                  alt="Dashboard completo do sistema Zanker"
+                  className="rounded-lg mx-auto"
+              />
+          </div>
+          
+          <Tooltip text="Custo Previsto vs. Real" position="top-[15%] left-[5%]" delay="delay-0" />
+          <Tooltip text="Cronograma Físico-Financeiro" position="top-[50%] right-[2%]" delay="delay-300" />
+          <Tooltip text="Status de Compras" position="bottom-[20%] left-[15%]" delay="delay-500" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default DashboardDemo;
