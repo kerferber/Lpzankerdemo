@@ -145,16 +145,28 @@ const FeatureShowcase: React.FC = () => {
                 <h3 className="text-2xl font-bold text-text-main">{activeFeature.headline}</h3>
                 <p className="mt-2 text-text-secondary">{activeFeature.description}</p>
              </div>
-            <div className={`mt-6 relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{transitionDelay: '500ms'}}>
-                <div className="bg-slate-100 rounded-xl p-2 shadow-lg">
-                    <img
-                      key={activeFeature.id} // Re-triggers animation on change
-                      src={activeFeature.imageSrc}
-                      alt={`Demonstração da funcionalidade ${activeFeature.title}`}
-                      className="w-full h-auto object-cover rounded-lg animate-scale-in"
-                      loading="lazy"
-                    />
+            <div 
+              className={`mt-8 relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} 
+              style={{ transitionDelay: '500ms', perspective: '1500px' }}
+            >
+              <div className="bg-slate-200/60 rounded-xl p-1.5 sm:p-2 shadow-mockup transition-all duration-500 ease-out hover:shadow-xl hover:shadow-primary/20 [transform:rotateX(5deg)_rotateY(-12deg)] hover:[transform:rotateX(2deg)_rotateY(-4deg)] [transform-style:preserve-3d]">
+                {/* Mockup Header */}
+                <div className="h-7 sm:h-8 bg-slate-100 rounded-t-lg flex items-center px-2 sm:px-3 gap-1.5">
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
                 </div>
+                {/* Image content */}
+                <div className="max-h-[480px] overflow-hidden rounded-b-lg bg-white">
+                  <img
+                    key={activeFeature.id}
+                    src={activeFeature.imageSrc}
+                    alt={`Demonstração da funcionalidade ${activeFeature.title}`}
+                    className="w-full h-auto object-cover object-top animate-scale-in"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
