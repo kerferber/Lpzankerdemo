@@ -20,17 +20,44 @@ const CloseIcon: React.FC = () => (
     </svg>
 );
 
+const navItems = [
+    { href: '#features', label: 'Funcionalidades' },
+    { href: '#how-it-works', label: 'Como funciona' },
+    { href: '#target-audience', label: 'Para quem é' },
+    { href: '#pricing', label: 'Planos' },
+    { href: '#faq', label: 'FAQ' },
+];
 
 const Header: React.FC = () => {
   const [hasScrolled, setHasScrolled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
       setHasScrolled(window.scrollY > 10);
+
+      let currentSectionId = '';
+      // Using a dynamic offset based on viewport height for more reliable detection
+      const offset = window.innerHeight / 3;
+
+      // Iterate backwards to find the last section that has been scrolled past
+      for (let i = navItems.length - 1; i >= 0; i--) {
+        const item = navItems[i];
+        const section = document.getElementById(item.href.substring(1));
+        if (section) {
+          if (section.offsetTop <= window.scrollY + offset) {
+            currentSectionId = item.href.substring(1);
+            break; 
+          }
+        }
+      }
+      setActiveSection(currentSectionId);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Run on mount to set initial active section
 
     const timer = setTimeout(() => setIsMounted(true), 100);
 
@@ -51,21 +78,13 @@ const Header: React.FC = () => {
     };
   }, [isMenuOpen]);
 
-  const navItems = [
-    { href: '#features', label: 'Funcionalidades' },
-    { href: '#how-it-works', label: 'Como funciona' },
-    { href: '#target-audience', label: 'Para quem é' },
-    { href: '#pricing', label: 'Planos' },
-    { href: '#faq', label: 'FAQ' },
-  ];
-
   const handleLinkClick = () => {
     setIsMenuOpen(false);
   };
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300 ${hasScrolled ? 'shadow-sm' : 'shadow-none'}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${hasScrolled ? 'bg-white/80 backdrop-blur-sm shadow-sm' : 'bg-white shadow-none'}`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className={`flex-shrink-0 transition-all duration-500 ease-out ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}>
@@ -75,16 +94,20 @@ const Header: React.FC = () => {
             </div>
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex lg:items-center lg:space-x-8">
-              {navItems.map((item, index) => (
+              {navItems.map((item, index) => {
+                const isActive = activeSection === item.href.substring(1);
+                return (
                  <a 
                   key={item.href} 
                   href={item.href} 
-                  className={`text-text-main hover:text-primary transition-all duration-500 ease-out font-medium ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}
+                  className={`relative text-text-main hover:text-primary transition-all duration-500 ease-out font-medium ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'} ${isActive ? 'text-primary font-bold' : ''}`}
                   style={{ transitionDelay: `${index * 100 + 200}ms` }}
                  >
                    {item.label}
+                    <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-primary transform transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0'}`}></span>
                  </a>
-              ))}
+                )
+              })}
             </nav>
             <div className="flex items-center">
               {/* Desktop CTA */}

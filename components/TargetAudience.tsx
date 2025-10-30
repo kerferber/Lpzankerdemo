@@ -22,7 +22,7 @@ const TargetAudience: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) {

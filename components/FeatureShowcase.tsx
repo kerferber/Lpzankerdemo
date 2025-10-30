@@ -29,7 +29,7 @@ const icons = {
   ),
 };
 
-const showcaseData = [
+export const showcaseData = [
   {
     id: 'dashboard',
     title: 'Dashboard Central',
@@ -85,6 +85,9 @@ const FeatureShowcase: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
 
+  const [isSwiping, setIsSwiping] = useState(false);
+  const [swipeStartX, setSwipeStartX] = useState(0);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -93,7 +96,7 @@ const FeatureShowcase: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) {
@@ -103,6 +106,31 @@ const FeatureShowcase: React.FC = () => {
   }, []);
 
   const activeFeature = showcaseData.find((f) => f.id === activeFeatureId) || showcaseData[0];
+
+  const handleSwipeStart = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsSwiping(true);
+    setSwipeStartX('touches' in e ? e.touches[0].clientX : e.clientX);
+  };
+
+  const handleSwipeEnd = (e: React.MouseEvent | React.TouchEvent) => {
+      if (!isSwiping) return;
+      setIsSwiping(false);
+      
+      const endX = 'changedTouches' in e ? e.changedTouches[0].clientX : ('clientX' in e ? e.clientX : 0);
+      const swipeDistance = endX - swipeStartX;
+
+      if (Math.abs(swipeDistance) > 50) { // swipe threshold
+          const currentIndex = showcaseData.findIndex(f => f.id === activeFeatureId);
+          if (swipeDistance < 0) { // swipe left
+              const nextIndex = (currentIndex + 1) % showcaseData.length;
+              setActiveFeatureId(showcaseData[nextIndex].id);
+          } else { // swipe right
+              const prevIndex = (currentIndex - 1 + showcaseData.length) % showcaseData.length;
+              setActiveFeatureId(showcaseData[prevIndex].id);
+          }
+      }
+  };
+
 
   return (
     <section ref={sectionRef} id="feature-showcase" className="py-16 md:py-24 bg-white overflow-hidden">
@@ -142,14 +170,21 @@ const FeatureShowcase: React.FC = () => {
           {/* Right Column: Content */}
           <div className="lg:col-span-8 lg:mt-0">
              <div className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '300ms'}}>
-                <h3 className="text-2xl font-bold text-text-main">{activeFeature.headline}</h3>
-                <p className="mt-2 text-text-secondary">{activeFeature.description}</p>
+                <div key={activeFeature.id} className="animate-fade-in">
+                  <h3 className="text-2xl font-bold text-text-main">{activeFeature.headline}</h3>
+                  <p className="mt-2 text-text-secondary">{activeFeature.description}</p>
+                </div>
              </div>
             <div 
               className={`mt-8 relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} 
               style={{ transitionDelay: '500ms', perspective: '1500px' }}
+              onMouseDown={handleSwipeStart}
+              onMouseUp={handleSwipeEnd}
+              onMouseLeave={handleSwipeEnd}
+              onTouchStart={handleSwipeStart}
+              onTouchEnd={handleSwipeEnd}
             >
-              <div className="bg-slate-200/60 rounded-xl p-1.5 sm:p-2 shadow-mockup transition-all duration-500 ease-out hover:shadow-xl hover:shadow-primary/20 lg:[transform:rotateX(5deg)_rotateY(-12deg)] lg:hover:[transform:rotateX(2deg)_rotateY(-4deg)] lg:[transform-style:preserve-3d]">
+              <div className="bg-slate-200/60 rounded-xl p-1.5 sm:p-2 shadow-mockup transition-all duration-500 ease-out hover:shadow-xl hover:shadow-primary/20 lg:[transform:rotateX(5deg)_rotateY(-12deg)] lg:hover:[transform:rotateX(2deg)_rotateY(-4deg)] lg:[transform-style:preserve-3d] cursor-grab active:cursor-grabbing">
                 {/* Mockup Header */}
                 <div className="h-7 sm:h-8 bg-slate-100 rounded-t-lg flex items-center px-2 sm:px-3 gap-1.5">
                   <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
@@ -164,6 +199,7 @@ const FeatureShowcase: React.FC = () => {
                     alt={`Demonstração da funcionalidade ${activeFeature.title}`}
                     className="w-full h-auto object-cover object-top animate-scale-in contrast-125 saturate-105 brightness-105"
                     loading="lazy"
+                    draggable="false"
                   />
                 </div>
               </div>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import SocialProof from './components/SocialProof';
 import ClientLogos from './components/ClientLogos';
-import FeatureShowcase from './components/FeatureShowcase';
+import FeatureShowcase, { showcaseData } from './components/FeatureShowcase';
 import Features from './components/Features';
 import DashboardDemo from './components/DashboardDemo';
 import HowItWorks from './components/HowItWorks';
@@ -16,6 +16,14 @@ import Footer from './components/Footer';
 import FloatingBanner from './components/FloatingBanner';
 
 function App() {
+  // Preload images from the showcase to avoid lag on interaction
+  useEffect(() => {
+    showcaseData.forEach((feature) => {
+      const img = new Image();
+      img.src = feature.imageSrc;
+    });
+  }, []);
+
   return (
     <div className="bg-white text-text-main antialiased">
       <Header />
@@ -29,8 +37,8 @@ function App() {
         <HowItWorks />
         <TargetAudience />
         <Testimonials />
-        <Faq />
         <Pricing />
+        <Faq />
         <FinalCta />
       </main>
       <FloatingBanner />

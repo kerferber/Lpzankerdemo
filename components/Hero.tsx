@@ -9,7 +9,7 @@ const CheckCircleIcon: React.FC<{ className?: string }> = ({ className }) => (
 const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) {
@@ -49,30 +49,36 @@ const Hero: React.FC = () => {
               <p className="mt-3 text-sm text-text-secondary">Sem cartão de crédito. Sem compromisso.</p>
             </div>
             <div className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:gap-8">
-              <div className={`flex items-center gap-3 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '600ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-primary" />
+              <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '600ms'}}>
+                <CheckCircleIcon className="w-7 h-7 text-primary transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-slate-600 font-medium">Reduza até 18% de desperdício de material.</span>
               </div>
-              <div className={`flex items-center gap-3 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '800ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-primary" />
+              <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '800ms'}}>
+                <CheckCircleIcon className="w-7 h-7 text-primary transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-slate-600 font-medium">Elimine surpresas no cronograma físico-financeiro.</span>
               </div>
-              <div className={`flex items-center gap-3 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '1000ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-primary" />
+              <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '1000ms'}}>
+                <CheckCircleIcon className="w-7 h-7 text-primary transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-slate-600 font-medium">Veja custo previsto × custo real em tempo real.</span>
               </div>
             </div>
           </div>
           <div className="flex justify-center mt-12 lg:mt-0">
-            <div className={`relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{ transitionDelay: '300ms'}}>
+            <div className={`relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
               <img
                 src="https://raw.githubusercontent.com/kerferber/zankerimg/main/img02hero.png"
                 alt="Dashboard do sistema Zanker"
                 className="rounded-xl shadow-xl relative z-10 animate-float"
                 loading="lazy"
               />
-              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-primary/10 rounded-full z-0 hidden sm:block"></div>
-              <div className="absolute -top-8 -left-8 w-32 h-32 bg-white rounded-full z-0 hidden sm:block"></div>
+              <div 
+                className="absolute -bottom-8 -right-8 w-48 h-48 bg-primary/10 rounded-full z-0 hidden sm:block animate-float"
+                style={{ animationDelay: '1s', animationDuration: '8s' }}
+              ></div>
+              <div 
+                className="absolute -top-8 -left-8 w-32 h-32 bg-white rounded-full z-0 hidden sm:block animate-float"
+                style={{ animationDelay: '0.5s', animationDuration: '7s' }}
+              ></div>
             </div>
           </div>
         </div>

@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const Tooltip: React.FC<{ text: string; position: string; delay: number; animationType: 'slide-left' | 'slide-right' | 'fade-up' }> = ({ text, position, delay, animationType }) => {
+const Tooltip: React.FC<{ 
+    text: string; 
+    position: string; 
+    delay: number; 
+    animationType: 'slide-left' | 'slide-right' | 'fade-up';
+    onHover: (isHovering: boolean) => void;
+    isDimmed: boolean;
+}> = ({ text, position, delay, animationType, onHover, isDimmed }) => {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -29,7 +36,9 @@ const Tooltip: React.FC<{ text: string; position: string; delay: number; animati
 
     return (
         <div 
-          className={`${baseClasses} ${position} ${mounted ? currentAnimation.final : currentAnimation.initial}`}
+          onMouseEnter={() => onHover(true)}
+          onMouseLeave={() => onHover(false)}
+          className={`${baseClasses} ${position} ${mounted ? currentAnimation.final : currentAnimation.initial} ${isDimmed ? 'opacity-50' : 'opacity-100'} hover:!opacity-100 hover:scale-105 z-20`}
         >
             <div className="bg-white p-3 rounded-lg shadow-xl flex items-center space-x-2">
                 <span className="h-2 w-2 bg-green-500 rounded-full flex-shrink-0 relative">
@@ -45,6 +54,7 @@ const Tooltip: React.FC<{ text: string; position: string; delay: number; animati
 const DashboardDemo: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
+  const [hoveredTooltip, setHoveredTooltip] = useState<string | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -54,7 +64,7 @@ const DashboardDemo: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) {
@@ -83,9 +93,30 @@ const DashboardDemo: React.FC = () => {
           </div>
           
           {inView && <>
-            <Tooltip text="Custo Previsto vs. Real" position="top-[15%] left-[5%]" delay={500} animationType="slide-left" />
-            <Tooltip text="Cronograma Físico-Financeiro" position="top-[50%] right-[2%]" delay={700} animationType="slide-right" />
-            <Tooltip text="Status de Compras" position="bottom-[20%] left-[15%]" delay={900} animationType="fade-up" />
+            <Tooltip 
+              text="Custo Previsto vs. Real" 
+              position="top-[15%] left-[5%]" 
+              delay={500} 
+              animationType="slide-left" 
+              onHover={(isHovering) => setHoveredTooltip(isHovering ? 'cost' : null)}
+              isDimmed={hoveredTooltip !== null && hoveredTooltip !== 'cost'}
+            />
+            <Tooltip 
+              text="Cronograma Físico-Financeiro" 
+              position="top-[50%] right-[2%]" 
+              delay={700} 
+              animationType="slide-right" 
+              onHover={(isHovering) => setHoveredTooltip(isHovering ? 'schedule' : null)}
+              isDimmed={hoveredTooltip !== null && hoveredTooltip !== 'schedule'}
+            />
+            <Tooltip 
+              text="Status de Compras" 
+              position="bottom-[20%] left-[15%]" 
+              delay={900} 
+              animationType="fade-up" 
+              onHover={(isHovering) => setHoveredTooltip(isHovering ? 'purchases' : null)}
+              isDimmed={hoveredTooltip !== null && hoveredTooltip !== 'purchases'}
+            />
           </>}
         </div>
       </div>

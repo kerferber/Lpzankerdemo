@@ -6,6 +6,43 @@ const CheckIcon = () => (
     </svg>
 );
 
+const AnimatedPrice: React.FC<{ price: number }> = ({ price }) => {
+    const [currentPrice, setCurrentPrice] = useState(price);
+    const prevPriceRef = useRef(price);
+
+    useEffect(() => {
+        const startPrice = prevPriceRef.current;
+        const endPrice = price;
+        prevPriceRef.current = price;
+
+        if (startPrice === endPrice) {
+            setCurrentPrice(endPrice);
+            return;
+        };
+
+        let startTime: number;
+        const duration = 400;
+
+        const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const progress = timestamp - startTime;
+            const percentage = Math.min(progress / duration, 1);
+            
+            const animatedValue = Math.round(startPrice + (endPrice - startPrice) * percentage);
+            setCurrentPrice(animatedValue);
+
+            if (progress < duration) {
+                requestAnimationFrame(animate);
+            }
+        };
+
+        requestAnimationFrame(animate);
+
+    }, [price]);
+
+    return <>{currentPrice}</>;
+};
+
 const plansData = [
     {
         name: 'Essencial',
@@ -75,7 +112,7 @@ const PlanCard: React.FC<{
             )}
             <h3 className="text-2xl font-bold text-text-main text-center">{plan.name}</h3>
             <div className="text-center mt-4">
-                <span className="text-5xl font-extrabold text-text-main">R${price}</span>
+                <span className="text-5xl font-extrabold text-text-main">R$<AnimatedPrice price={price} /></span>
                 <span className="text-text-secondary">/mês</span>
                  {billingCycle === 'annual' && <p className="text-sm text-primary font-semibold mt-1">Cobrado R${plan.prices.annual.toLocaleString('pt-BR')}/ano</p>}
             </div>
@@ -106,7 +143,7 @@ const Pricing: React.FC = () => {
               observer.disconnect();
             }
           },
-          { threshold: 0.1 }
+          { threshold: 0.4 }
         );
     
         if (sectionRef.current) {
@@ -137,7 +174,9 @@ const Pricing: React.FC = () => {
                     </button>
                     <span className={`font-semibold relative transition-colors ${billingCycle === 'annual' ? 'text-primary' : 'text-text-secondary'}`}>
                         Anual
-                        <span className={`absolute -top-5 -right-2 sm:-right-4 text-xs font-bold px-2 py-0.5 rounded-full transform transition-all duration-300 ${billingCycle === 'annual' ? 'bg-green-100 text-green-700 -rotate-12 scale-100' : 'scale-0'}`}>2 meses grátis</span>
+                        <span className={`absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold px-3 py-1 rounded-full transform transition-all duration-300 ease-out ${billingCycle === 'annual' ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none'}`}>
+                            2 meses grátis
+                        </span>
                     </span>
                 </div>
                 <div className="mt-16 flex flex-col lg:flex-row items-center lg:items-end justify-center gap-8 lg:gap-4">

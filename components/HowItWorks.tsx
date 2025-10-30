@@ -19,7 +19,7 @@ const HowItWorks: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) {
@@ -41,6 +41,10 @@ const HowItWorks: React.FC = () => {
         <div className="mt-20">
           <div className="relative">
             <div className="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-slate-200" aria-hidden="true"></div>
+            <div 
+              className={`hidden md:block absolute top-8 left-0 w-full h-0.5 bg-primary origin-left transition-transform ease-out duration-1000 delay-500 ${inView ? 'scale-x-100' : 'scale-x-0'}`} 
+              aria-hidden="true"
+            ></div>
             <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
               {steps.map((step, index) => (
                 <div key={step.number} className={`text-center transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: `${index * 150 + 200}ms`}}>

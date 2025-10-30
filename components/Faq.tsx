@@ -65,7 +65,7 @@ const Faq: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) {
@@ -78,8 +78,25 @@ const Faq: React.FC = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqData.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+            "@type": "Answer",
+            "text": item.answer
+        }
+    }))
+  };
+
   return (
     <section ref={sectionRef} id="faq" className="py-16 md:py-24 bg-light-gray overflow-hidden">
+      <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Perguntas Frequentes</h2>
