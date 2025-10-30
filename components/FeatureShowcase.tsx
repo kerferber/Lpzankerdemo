@@ -52,7 +52,7 @@ const showcaseData = [
     icon: icons.users,
     headline: 'Transparência e profissionalismo para o seu cliente.',
     description: 'Ofereça um portal exclusivo para seus clientes acompanharem o andamento da obra, aprovarem medições e acessarem relatórios de forma simples e organizada.',
-    imageSrc: 'https://raw.githubusercontent.com/kerferber/Lpzankerdemo/refs/heads/main/portaldocliente.png',
+    imageSrc: 'https://raw.githubusercontent.com/kerferber/zankerimg/main/portal-do-cliente.png',
   },
   {
     id: 'insights',

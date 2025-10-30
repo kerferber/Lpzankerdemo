@@ -75,7 +75,7 @@ const DashboardDemo: React.FC = () => {
         <div className={`mt-16 relative`}>
           <div className={`bg-slate-200 rounded-xl p-2 sm:p-4 shadow-mockup max-w-5xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{ transitionDelay: '200ms' }}>
               <img 
-                  src="https://raw.githubusercontent.com/kerferber/Lpzankerdemo/refs/heads/main/bimg002.png" 
+                  src="https://raw.githubusercontent.com/kerferber/zankerimg/main/banner1.png" 
                   alt="Dashboard completo do sistema Zanker"
                   className="rounded-xl mx-auto transition-transform duration-400 hover:scale-102"
                   loading="lazy"
