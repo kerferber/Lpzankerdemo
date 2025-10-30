@@ -36,7 +36,7 @@ const showcaseData = [
     icon: icons.dashboard,
     headline: 'Visão completa de todos os seus projetos em um só lugar.',
     description: 'Acompanhe o status geral das obras, finanças e tarefas pendentes em um painel intuitivo. Tenha o controle total do seu negócio na palma da mão.',
-    imageSrc: 'https://raw.githubusercontent.com/kerferber/Lpzankerdemo/refs/heads/main/diariodeobras.png',
+    imageSrc: 'https://raw.githubusercontent.com/kerferber/zankerimg/main/dashboard.png',
   },
   {
     id: 'diary',
@@ -44,7 +44,7 @@ const showcaseData = [
     icon: icons.diary,
     headline: 'Registre o progresso da obra com fotos e relatórios detalhados.',
     description: 'Documente cada etapa do projeto diretamente do canteiro. Adicione fotos, comente o andamento e compartilhe relatórios profissionais com sua equipe e clientes.',
-    imageSrc: 'https://raw.githubusercontent.com/kerferber/Lpzankerdemo/refs/heads/main/obras1.png',
+    imageSrc: 'https://raw.githubusercontent.com/kerferber/zankerimg/main/obras.png',
   },
   {
     id: 'portal',
@@ -60,7 +60,7 @@ const showcaseData = [
     icon: icons.insights,
     headline: 'Decisões baseadas em dados, não em achismos.',
     description: 'Acompanhe a saúde financeira de seus projetos com dashboards e relatórios inteligentes. Veja previsto vs. realizado em tempo real e identifique desvios antes que virem problemas.',
-    imageSrc: 'https://raw.githubusercontent.com/kerferber/Lpzankerdemo/refs/heads/main/financeiro.png',
+    imageSrc: 'https://raw.githubusercontent.com/kerferber/zankerimg/main/insights.png',
   },
   {
     id: 'rh',
@@ -68,7 +68,7 @@ const showcaseData = [
     icon: icons.users,
     headline: 'Sua equipe organizada e produtiva.',
     description: 'Centralize informações de colaboradores, controle de ponto, documentos e pagamentos. Tenha uma visão clara da sua equipe em cada projeto.',
-    imageSrc: 'https://raw.githubusercontent.com/kerferber/Lpzankerdemo/refs/heads/main/colaboradores.png',
+    imageSrc: 'https://raw.githubusercontent.com/kerferber/zankerimg/main/colaboradores.png',
   },
   {
     id: 'crm',
@@ -76,7 +76,7 @@ const showcaseData = [
     icon: icons.crm,
     headline: 'Transforme contatos em contratos.',
     description: 'Gerencie seu funil de vendas, acompanhe propostas e não perca nenhuma oportunidade. O CRM integrado para construtoras e escritórios.',
-    imageSrc: 'https://raw.githubusercontent.com/kerferber/Lpzankerdemo/refs/heads/main/leads-crm.png',
+    imageSrc: 'https://raw.githubusercontent.com/kerferber/zankerimg/main/leads-crm.png',
   },
 ];
 
