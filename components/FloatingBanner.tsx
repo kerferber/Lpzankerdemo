@@ -29,7 +29,7 @@ const FloatingBanner: React.FC = () => {
 
     return (
         <div className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-4 sm:pb-6 transition-all duration-500 ease-in-out ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
-            <div className="relative max-w-lg mx-auto bg-primary/95 backdrop-blur-sm p-4 sm:p-5 rounded-2xl shadow-2xl border border-white/20">
+            <div className="relative max-w-lg mx-auto bg-primary/90 backdrop-blur-sm p-4 sm:p-5 rounded-2xl shadow-2xl border border-white/20">
                 <div className="flex items-center justify-between gap-4">
                     <div>
                         <p className="font-semibold text-white text-base sm:text-lg">
