@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const Logo = () => (
     <svg width="120" height="32" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,21 +33,33 @@ const Header: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setHasScrolled(window.scrollY > 10);
+      const currentScrollY = window.scrollY;
+      setHasScrolled(currentScrollY > 10);
 
+      // Mobile header visibility logic
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down
+        setIsHeaderVisible(false);
+      } else {
+        // Scrolling up
+        setIsHeaderVisible(true);
+      }
+      lastScrollY.current = currentScrollY;
+
+      // Active section logic
       let currentSectionId = '';
-      // Using a dynamic offset based on viewport height for more reliable detection
       const offset = window.innerHeight / 3;
 
-      // Iterate backwards to find the last section that has been scrolled past
       for (let i = navItems.length - 1; i >= 0; i--) {
         const item = navItems[i];
         const section = document.getElementById(item.href.substring(1));
         if (section) {
-          if (section.offsetTop <= window.scrollY + offset) {
+          if (section.offsetTop <= currentScrollY + offset) {
             currentSectionId = item.href.substring(1);
             break; 
           }
@@ -57,7 +69,7 @@ const Header: React.FC = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Run on mount to set initial active section
+    handleScroll(); 
 
     const timer = setTimeout(() => setIsMounted(true), 100);
 
@@ -81,10 +93,17 @@ const Header: React.FC = () => {
   const handleLinkClick = () => {
     setIsMenuOpen(false);
   };
+  
+  const headerClasses = `
+    fixed top-0 left-0 right-0 z-50 transition-all duration-300
+    ${hasScrolled ? 'bg-white/80 backdrop-blur-sm shadow-sm' : 'bg-white shadow-none'}
+    ${isHeaderVisible || isMenuOpen ? 'translate-y-0' : '-translate-y-full'}
+    lg:translate-y-0
+  `;
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${hasScrolled ? 'bg-white/80 backdrop-blur-sm shadow-sm' : 'bg-white shadow-none'}`}>
+      <header className={headerClasses}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className={`flex-shrink-0 transition-all duration-500 ease-out ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}>

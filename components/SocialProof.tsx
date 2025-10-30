@@ -1,61 +1,65 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 
-const AnimatedCounter: React.FC<{ end: number, duration?: number }> = ({ end, duration = 2000 }) => {
-    const [count, setCount] = React.useState(0);
-    const countRef = React.useRef<HTMLSpanElement>(null);
+// Self-contained component to animate numbers
+const AnimatedNumber: React.FC<{ finalValue: number; inView: boolean }> = ({ finalValue, inView }) => {
+    const [currentValue, setCurrentValue] = useState(0);
 
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    let start = 0;
-                    const startTime = performance.now();
-                    const animateCount = (timestamp: number) => {
-                        const progress = timestamp - startTime;
-                        const percentage = Math.min(progress / duration, 1);
-                        start = Math.floor(percentage * end);
-                        setCount(start);
-                        if (progress < duration) {
-                            requestAnimationFrame(animateCount);
-                        }
-                    };
-                    requestAnimationFrame(animateCount);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.5 }
-        );
+    useEffect(() => {
+        if (!inView) return;
 
-        if (countRef.current) {
-            observer.observe(countRef.current);
-        }
+        let startTimestamp: number | null = null;
+        const duration = 2000; // 2 seconds animation duration
 
-        return () => observer.disconnect();
-    }, [end, duration]);
+        const step = (timestamp: number) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            // easeOutCubic easing function
+            const easedProgress = 1 - Math.pow(1 - progress, 3);
+            
+            const value = Math.floor(easedProgress * finalValue);
+            setCurrentValue(value);
 
-    return <span ref={countRef}>{count}</span>;
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                setCurrentValue(finalValue); // Ensure it ends on the exact value
+            }
+        };
+
+        requestAnimationFrame(step);
+    }, [inView, finalValue]);
+
+    return <>{currentValue}</>;
 };
 
 
-const ArchitectIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" />
-    </svg>
-);
-const EngineerIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.472-2.472a3.375 3.375 0 00-4.773-4.773L6.75 15.75l2.472 2.472a3.375 3.375 0 004.773-4.773z" />
-    </svg>
-);
-const ConstructionIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h6.375M9 12h6.375M9 17.25h6.375" />
-    </svg>
-);
+const profiles = [
+  {
+    name: 'Arquitetos',
+    icon: <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.6667 15L28.3333 21.6667" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.33331 30V36.6667H10L29.5 17.1667L22.8333 10.5L3.33331 30Z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22.8333 10.5L29.5 17.1667" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  },
+  {
+    name: 'Engenheiros',
+    icon: <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="15" r="11.6667" fill="#EFF6FF" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M36.6667 36.6667L25.8333 25.8333" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 10V20" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 15H20" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  },
+  {
+    name: 'Construtoras',
+    icon: <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 36.6667H30" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6.66669 36.6667V10L20 3.33334L33.3334 10V36.6667H6.66669Z" fill="#EFF6FF" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 36.6667V26.6667" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="15" y="15" width="10" height="10" rx="2" fill="#EFF6FF" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  }
+];
 
 const SocialProof: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const autoplayIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startAutoplay = useCallback(() => {
+    if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
+    autoplayIntervalRef.current = setInterval(() => {
+      setActiveIndex(prev => (prev + 1) % profiles.length);
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -71,39 +75,63 @@ const SocialProof: React.FC = () => {
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
+  useEffect(() => {
+    if (inView && window.innerWidth < 768) {
+      startAutoplay();
+    }
+    return () => {
+      if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
+    };
+  }, [inView, startAutoplay]);
+
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-light-blue overflow-hidden">
+    <section ref={sectionRef} className="py-16 md:py-24 bg-light-blue bg-dot-pattern bg-dot-pattern-size overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className={`transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-          <h2 className="text-3xl lg:text-4xl font-bold text-text-main tracking-tight leading-tight">
-            Mais de <span className="text-primary"><AnimatedCounter end={500} /></span> escritórios de engenharia já usam a Zanker para entregar no prazo e dentro do orçamento.
-          </h2>
-          <p className="mt-4 text-lg text-text-secondary max-w-3xl mx-auto">
-            Junte-se a profissionais que transformaram a gestão de seus projetos e negócios.
-          </p>
+        <div className={`max-w-4xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+            <h2 className="font-display text-3xl md:text-4xl font-semibold text-text-main tracking-normal leading-tight">
+                Mais de <span className="text-primary"><AnimatedNumber finalValue={500} inView={inView} /></span> escritórios de engenharia já usam a Zanker para entregar no prazo e dentro do orçamento.
+            </h2>
+            <p className="mt-4 text-lg text-text-secondary">
+                Junte-se a profissionais que transformaram a gestão de seus projetos e negócios.
+            </p>
         </div>
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '200ms'}}>
-            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4 transition-all duration-300 hover:scale-110 hover:bg-blue-50">
-              <ArchitectIcon />
+
+        {/* Desktop Grid */}
+        <div className={`hidden md:grid grid-cols-3 gap-8 mt-12 max-w-4xl mx-auto`}>
+          {profiles.map((profile, index) => (
+            <div 
+              key={profile.name}
+              className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${index * 150 + 300}ms` }}
+            >
+              <div className="group flex flex-col items-center gap-4 rounded-xl p-6 transition-colors hover:bg-white/50">
+                <div className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-sm border border-slate-200/80 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg">
+                  {profile.icon}
+                </div>
+                <h3 className="text-xl font-bold text-text-main">{profile.name}</h3>
+              </div>
             </div>
-            <h3 className="mt-2 text-xl font-semibold text-text-main">Arquitetos</h3>
-          </div>
-          <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '300ms'}}>
-            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4 transition-all duration-300 hover:scale-110 hover:bg-blue-50">
-              <EngineerIcon />
-            </div>
-            <h3 className="mt-2 text-xl font-semibold text-text-main">Engenheiros</h3>
-          </div>
-          <div className={`flex flex-col items-center p-6 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '400ms'}}>
-            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white shadow-md mb-4 transition-all duration-300 hover:scale-110 hover:bg-blue-50">
-              <ConstructionIcon />
-            </div>
-            <h3 className="mt-2 text-xl font-semibold text-text-main">Construtoras</h3>
-          </div>
+          ))}
+        </div>
+        
+        {/* Mobile Carousel */}
+        <div className="md:hidden mt-10 h-40 relative">
+            {profiles.map((profile, index) => (
+                <div 
+                    key={profile.name}
+                    className={`absolute inset-0 flex flex-col items-center justify-center gap-4 transition-opacity duration-500 ease-in-out ${activeIndex === index ? 'opacity-100' : 'opacity-0'}`}
+                >
+                    <div className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-sm border border-slate-200/80">
+                        {profile.icon}
+                    </div>
+                    <h3 className="text-xl font-bold text-text-main">{profile.name}</h3>
+                </div>
+            ))}
         </div>
       </div>
     </section>

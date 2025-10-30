@@ -131,7 +131,6 @@ const FeatureShowcase: React.FC = () => {
       }
   };
 
-
   return (
     <section ref={sectionRef} id="feature-showcase" className="py-16 md:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -141,33 +140,26 @@ const FeatureShowcase: React.FC = () => {
             Veja como cada módulo do Zanker foi pensado para resolver os desafios do seu dia a dia.
           </p>
         </div>
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* Left Column: Feature List */}
+        
+        {/* Desktop View */}
+        <div className="mt-16 hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           <div className="lg:col-span-4 flex flex-col gap-2">
             {showcaseData.map((feature, index) => (
               <button
                 key={feature.id}
                 onClick={() => setActiveFeatureId(feature.id)}
                 className={`w-full text-left p-4 rounded-lg transition-all duration-300 flex items-center gap-4 ${
-                  activeFeatureId === feature.id
-                    ? 'bg-light-blue shadow-sm'
-                    : 'hover:bg-slate-100/50'
+                  activeFeatureId === feature.id ? 'bg-light-blue shadow-sm' : 'hover:bg-slate-100/50'
                 } ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-5'}`}
                 style={{ transitionDelay: `${index * 100 + 200}ms` }}
               >
                 <div className={`flex-shrink-0 p-3 rounded-md transition-colors ${activeFeatureId === feature.id ? 'bg-primary text-white' : 'bg-slate-200 text-primary'}`}>
                   {feature.icon}
                 </div>
-                <div>
-                  <h3 className={`font-bold text-lg ${activeFeatureId === feature.id ? 'text-primary' : 'text-text-main'}`}>
-                    {feature.title}
-                  </h3>
-                </div>
+                <div><h3 className={`font-bold text-lg ${activeFeatureId === feature.id ? 'text-primary' : 'text-text-main'}`}>{feature.title}</h3></div>
               </button>
             ))}
           </div>
-
-          {/* Right Column: Content */}
           <div className="lg:col-span-8 lg:mt-0">
              <div className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '300ms'}}>
                 <div key={activeFeature.id} className="animate-fade-in">
@@ -178,33 +170,49 @@ const FeatureShowcase: React.FC = () => {
             <div 
               className={`mt-8 relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} 
               style={{ transitionDelay: '500ms', perspective: '1500px' }}
-              onMouseDown={handleSwipeStart}
-              onMouseUp={handleSwipeEnd}
-              onMouseLeave={handleSwipeEnd}
-              onTouchStart={handleSwipeStart}
-              onTouchEnd={handleSwipeEnd}
+              onMouseDown={handleSwipeStart} onMouseUp={handleSwipeEnd} onMouseLeave={handleSwipeEnd} onTouchStart={handleSwipeStart} onTouchEnd={handleSwipeEnd}
             >
               <div className="bg-slate-200/60 rounded-xl p-1.5 sm:p-2 shadow-mockup transition-all duration-500 ease-out hover:shadow-xl hover:shadow-primary/20 lg:[transform:rotateX(5deg)_rotateY(-12deg)] lg:hover:[transform:rotateX(2deg)_rotateY(-4deg)] lg:[transform-style:preserve-3d] cursor-grab active:cursor-grabbing">
-                {/* Mockup Header */}
                 <div className="h-7 sm:h-8 bg-slate-100 rounded-t-lg flex items-center px-2 sm:px-3 gap-1.5">
-                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
-                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
-                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div><div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div><div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
                 </div>
-                {/* Image content */}
                 <div className="max-h-[180px] sm:max-h-[220px] md:max-h-[250px] lg:max-h-[320px] overflow-hidden rounded-b-lg bg-white">
-                  <img
-                    key={activeFeature.id}
-                    src={activeFeature.imageSrc}
-                    alt={`Demonstração da funcionalidade ${activeFeature.title}`}
-                    className="w-full h-auto object-cover object-top animate-scale-in contrast-125 saturate-105 brightness-105"
-                    loading="lazy"
-                    draggable="false"
-                  />
+                  <img key={activeFeature.id} src={activeFeature.imageSrc} alt={`Demonstração da funcionalidade ${activeFeature.title}`} className="w-full h-auto object-cover object-top animate-scale-in contrast-125 saturate-105 brightness-105" loading="lazy" draggable="false"/>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        
+        {/* Mobile Accordion View */}
+        <div className="mt-12 lg:hidden flex flex-col gap-4">
+          {showcaseData.map((feature, index) => {
+            const isActive = activeFeatureId === feature.id;
+            return (
+              <div key={feature.id} className={`rounded-lg transition-all duration-300 ${isActive ? 'bg-light-blue' : 'bg-slate-50'} ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: `${index * 100 + 200}ms` }}>
+                <button
+                  onClick={() => setActiveFeatureId(isActive ? '' : feature.id)}
+                  className="w-full text-left p-4 flex items-center gap-4"
+                  aria-expanded={isActive}
+                >
+                  <div className={`flex-shrink-0 p-3 rounded-md transition-colors ${isActive ? 'bg-primary text-white' : 'bg-slate-200 text-primary'}`}>
+                    {feature.icon}
+                  </div>
+                  <div><h3 className={`font-bold text-lg ${isActive ? 'text-primary' : 'text-text-main'}`}>{feature.title}</h3></div>
+                  <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ml-auto text-slate-500 transition-transform duration-300 ${isActive ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
+                </button>
+                <div className={`grid overflow-hidden transition-all duration-500 ease-in-out ${isActive ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                  <div className="overflow-hidden px-4 pb-4">
+                    <p className="mt-2 text-text-secondary">{feature.description}</p>
+                    <div className="mt-4 bg-slate-200/60 rounded-xl p-1.5 shadow-mockup">
+                      <div className="h-7 bg-slate-100 rounded-t-lg flex items-center px-2 gap-1.5"><div className="w-2.5 h-2.5 bg-slate-300 rounded-full"></div><div className="w-2.5 h-2.5 bg-slate-300 rounded-full"></div><div className="w-2.5 h-2.5 bg-slate-300 rounded-full"></div></div>
+                      <img src={feature.imageSrc} alt={`Demonstração de ${feature.title}`} className="w-full h-auto object-cover object-top rounded-b-lg" loading="lazy" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

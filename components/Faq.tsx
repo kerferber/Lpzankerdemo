@@ -53,7 +53,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer, isOpen, onClick }) 
 };
 
 const Faq: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
 
@@ -92,14 +92,14 @@ const Faq: React.FC = () => {
   };
 
   return (
-    <section ref={sectionRef} id="faq" className="py-16 md:py-24 bg-light-gray overflow-hidden">
+    <section ref={sectionRef} id="faq" className="py-16 md:py-24 bg-light-gray bg-dot-pattern bg-dot-pattern-size overflow-hidden">
       <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-          <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Perguntas Frequentes</h2>
+          <h2 className="font-display text-4xl font-semibold text-text-main tracking-normal leading-tight">Perguntas Frequentes</h2>
           <p className="mt-4 text-lg text-text-secondary">
             Tire suas dúvidas sobre nossa plataforma e veja como podemos ajudar seu negócio a crescer.
           </p>

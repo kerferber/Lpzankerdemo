@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const CheckCircleIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.06-1.06l-3.103 3.103-1.53-1.531a.75.75 0 00-1.06 1.06l2.06 2.06a.75.75 0 001.06 0l3.64-3.64z" clipRule="evenodd" />
   </svg>
 );
+
 
 const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -29,11 +30,11 @@ const Hero: React.FC = () => {
   }, []);
   
   return (
-    <section id="hero" className="pt-40 pb-24 bg-gradient-to-b from-light-blue to-white overflow-hidden">
+    <section id="hero" className="pt-40 pb-24 bg-light-blue bg-dot-pattern bg-dot-pattern-size overflow-hidden">
       <div ref={sectionRef} className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="text-center lg:text-left">
-            <h1 className={`text-4xl md:text-5xl font-extrabold text-text-main leading-tight tracking-tighter transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+            <h1 className={`font-display text-4xl md:text-5xl font-semibold text-text-main leading-tight tracking-normal transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
               Entrega de <span className="text-primary">obras</span> no prazo. <span className="text-primary">Orçamento</span> sob controle. <span className="text-primary">Escritório</span> em pleno comando.
             </h1>
             <p className={`mt-4 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0 transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '200ms'}}>
@@ -50,15 +51,15 @@ const Hero: React.FC = () => {
             </div>
             <div className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:gap-8">
               <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '600ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-primary transition-transform duration-300 group-hover:scale-110" />
+                <CheckCircleIcon className="w-7 h-7 text-secondary transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-slate-600 font-medium">Reduza até 18% de desperdício de material.</span>
               </div>
               <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '800ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-primary transition-transform duration-300 group-hover:scale-110" />
+                <CheckCircleIcon className="w-7 h-7 text-secondary transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-slate-600 font-medium">Elimine surpresas no cronograma físico-financeiro.</span>
               </div>
               <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '1000ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-primary transition-transform duration-300 group-hover:scale-110" />
+                <CheckCircleIcon className="w-7 h-7 text-secondary transition-transform duration-300 group-hover:scale-110" />
                 <span className="text-slate-600 font-medium">Veja custo previsto × custo real em tempo real.</span>
               </div>
             </div>

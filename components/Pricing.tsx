@@ -1,191 +1,128 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const CheckIcon = () => (
-    <svg className="w-5 h-5 text-primary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+const CheckIcon: React.FC = () => (
+    <svg className="h-6 w-6 text-secondary flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
     </svg>
 );
 
-const AnimatedPrice: React.FC<{ price: number }> = ({ price }) => {
-    const [currentPrice, setCurrentPrice] = useState(price);
-    const prevPriceRef = useRef(price);
-
-    useEffect(() => {
-        const startPrice = prevPriceRef.current;
-        const endPrice = price;
-        prevPriceRef.current = price;
-
-        if (startPrice === endPrice) {
-            setCurrentPrice(endPrice);
-            return;
-        };
-
-        let startTime: number;
-        const duration = 400;
-
-        const animate = (timestamp: number) => {
-            if (!startTime) startTime = timestamp;
-            const progress = timestamp - startTime;
-            const percentage = Math.min(progress / duration, 1);
-            
-            const animatedValue = Math.round(startPrice + (endPrice - startPrice) * percentage);
-            setCurrentPrice(animatedValue);
-
-            if (progress < duration) {
-                requestAnimationFrame(animate);
-            }
-        };
-
-        requestAnimationFrame(animate);
-
-    }, [price]);
-
-    return <>{currentPrice}</>;
+const pricingPlans = {
+    monthly: [
+        { name: 'Básico', price: '299', description: 'Para profissionais autônomos e pequenos escritórios.', features: ['2 Usuários', '5 Projetos ativos', 'Orçamento e cronograma', 'Diário de obra', 'Suporte via e-mail'], cta: 'Começar agora' },
+        { name: 'Profissional', price: '599', description: 'Para escritórios em crescimento e construtoras.', features: ['10 Usuários', 'Projetos ilimitados', 'Tudo do Básico, e mais:', 'Portal do Cliente', 'Módulo de Compras', 'Relatórios Avançados', 'Suporte prioritário'], cta: 'Escolher Profissional', popular: true },
+        { name: 'Empresa', price: 'Customizado', description: 'Para grandes construtoras e incorporadoras.', features: ['Usuários ilimitados', 'Tudo do Profissional, e mais:', 'Gestão de RH', 'CRM de Vendas', 'Onboarding personalizado', 'Gerente de conta dedicado'], cta: 'Fale conosco', popular: false },
+    ],
+    annually: [
+        { name: 'Básico', price: '249', description: 'Para profissionais autônomos e pequenos escritórios.', features: ['2 Usuários', '5 Projetos ativos', 'Orçamento e cronograma', 'Diário de obra', 'Suporte via e-mail'], cta: 'Começar agora' },
+        { name: 'Profissional', price: '499', description: 'Para escritórios em crescimento e construtoras.', features: ['10 Usuários', 'Projetos ilimitados', 'Tudo do Básico, e mais:', 'Portal do Cliente', 'Módulo de Compras', 'Relatórios Avançados', 'Suporte prioritário'], cta: 'Escolher Profissional', popular: true },
+        { name: 'Empresa', price: 'Customizado', description: 'Para grandes construtoras e incorporadoras.', features: ['Usuários ilimitados', 'Tudo do Profissional, e mais:', 'Gestão de RH', 'CRM de Vendas', 'Onboarding personalizado', 'Gerente de conta dedicado'], cta: 'Fale conosco', popular: false },
+    ]
 };
 
-const plansData = [
-    {
-        name: 'Essencial',
-        prices: { monthly: 299, annual: 299 * 10 },
-        features: [
-            'Até 5 usuários',
-            'Até 10 projetos simultâneos',
-            'Módulos de Orçamento e Cronograma',
-            'Suporte via e-mail'
-        ],
-        buttonText: 'Começar com Essencial',
-    },
-    {
-        name: 'Profissional',
-        prices: { monthly: 599, annual: 599 * 10 },
-        features: [
-            'Até 15 usuários',
-            'Até 30 projetos simultâneos',
-            'Todos os módulos do Essencial +',
-            'Compras e Acompanhamento',
-            'Relatórios Avançados',
-            'Suporte Prioritário (Chat e E-mail)',
-        ],
-        buttonText: 'Escolher Profissional',
-        isPopular: true,
-    },
-    {
-        name: 'Enterprise',
-        prices: { monthly: 899, annual: 899 * 10 },
-        features: [
-            'Usuários ilimitados',
-            'Projetos ilimitados',
-            'Todos os módulos do Profissional +',
-            'Gestão de Escritório',
-            'Onboarding Personalizado',
-            'Gerente de Conta Dedicado',
-        ],
-        buttonText: 'Fale com um especialista',
-    },
-];
-
-const PlanCard: React.FC<{
-    plan: typeof plansData[0];
-    billingCycle: 'monthly' | 'annual';
-}> = ({ plan, billingCycle }) => {
-    const cardClasses = `
-        bg-white rounded-2xl p-8 transition-all duration-300 w-full flex flex-col h-full
-        ${plan.isPopular ? 'border-2 border-primary shadow-2xl shadow-primary/20 transform lg:scale-105' : 'border border-slate-200 shadow-lg'}
-    `;
-    const buttonClasses = `
-        w-full py-3 px-6 rounded-lg font-semibold text-lg mt-8 transition-all duration-300 text-center
-        ${plan.isPopular ? 'bg-primary text-white hover:bg-primary-dark shadow-md hover:shadow-lg hover:-translate-y-px' : 'bg-light-blue text-primary hover:bg-blue-200'}
-    `;
-
-    const price = billingCycle === 'monthly' 
-        ? plan.prices.monthly 
-        : Math.round(plan.prices.annual / 12);
-
-    return (
-        <div className={cardClasses}>
-            {plan.isPopular && (
-                <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
-                    <span className="bg-primary text-white text-xs font-bold uppercase tracking-wider px-4 py-1 rounded-full">
-                        Mais Vendido
-                    </span>
-                </div>
+const PlanCard: React.FC<{plan: typeof pricingPlans.monthly[0]}> = ({ plan }) => (
+    <div className={`relative p-8 bg-white border rounded-xl flex flex-col ${plan.popular ? 'border-primary shadow-xl' : 'border-slate-200'}`}>
+        {plan.popular && <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-primary text-white text-sm font-semibold px-4 py-1 rounded-full">Mais Popular</div>}
+        <h3 className="text-xl font-bold text-text-main">{plan.name}</h3>
+        <p className="mt-2 text-text-secondary flex-grow">{plan.description}</p>
+        <div className="mt-6">
+            {plan.price === 'Customizado' ? (
+                <p className="text-4xl font-bold text-text-main">Customizado</p>
+            ) : (
+                <p className="text-4xl font-bold text-text-main">
+                    R$ {plan.price}<span className="text-lg font-medium text-text-secondary">/mês</span>
+                </p>
             )}
-            <h3 className="text-2xl font-bold text-text-main text-center">{plan.name}</h3>
-            <div className="text-center mt-4">
-                <span className="text-5xl font-extrabold text-text-main">R$<AnimatedPrice price={price} /></span>
-                <span className="text-text-secondary">/mês</span>
-                 {billingCycle === 'annual' && <p className="text-sm text-primary font-semibold mt-1">Cobrado R${plan.prices.annual.toLocaleString('pt-BR')}/ano</p>}
-            </div>
-            <ul className="mt-8 space-y-4 flex-grow">
-                {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                        <CheckIcon />
-                        <span className="ml-3 text-text-secondary">{feature}</span>
-                    </li>
-                ))}
-            </ul>
-            <a href="#cta" className={buttonClasses}>{plan.buttonText}</a>
         </div>
-    );
-};
+        <a href="#cta" className={`mt-8 block w-full text-center py-3 px-6 rounded-lg font-semibold transition-colors ${plan.popular ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-light-blue text-primary hover:bg-blue-200'}`}>
+            {plan.cta}
+        </a>
+        <ul className="mt-8 space-y-4 text-text-main">
+            {plan.features.map(feature => (
+                <li key={feature} className="flex items-start">
+                    <CheckIcon />
+                    <span className="ml-3">{feature}</span>
+                </li>
+            ))}
+        </ul>
+    </div>
+);
 
 
 const Pricing: React.FC = () => {
+    const [billingCycle, setBillingCycle] = useState<'monthly' | 'annually'>('monthly');
+    const [activeMobileTab, setActiveMobileTab] = useState('Profissional');
     const sectionRef = useRef<HTMLElement>(null);
     const [inView, setInView] = useState(false);
-    const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              setInView(true);
-              observer.disconnect();
-            }
-          },
-          { threshold: 0.4 }
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.2 }
         );
-    
+
         if (sectionRef.current) {
-          observer.observe(sectionRef.current);
+            observer.observe(sectionRef.current);
         }
         return () => observer.disconnect();
-      }, []);
+    }, []);
+
+    const plans = pricingPlans[billingCycle];
+    const activeMobilePlan = plans.find(p => p.name === activeMobileTab);
 
     return (
-        <section ref={sectionRef} id="pricing" className="py-16 md:py-24 bg-light-blue overflow-hidden">
+        <section ref={sectionRef} id="pricing" className="py-16 md:py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-                    <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Planos transparentes para o tamanho do seu negócio</h2>
+                    <p className="text-primary font-semibold tracking-wider uppercase mb-2">Planos e Preços</p>
+                    <h2 className="font-display text-4xl font-semibold text-text-main tracking-normal leading-tight">Escolha o plano que se encaixa no seu negócio.</h2>
                     <p className="mt-4 text-lg text-text-secondary">
-                        Escolha o plano ideal e comece a transformar a gestão das suas obras hoje mesmo.
+                        Comece com 14 dias grátis. Cancele quando quiser.
                     </p>
                 </div>
-                <div id="pricing-selector" className={`mt-10 flex justify-center items-center gap-4 transition-all duration-600 ease-out delay-100 ${inView ? 'opacity-100' : 'opacity-0'}`}>
-                    <span className={`font-semibold transition-colors ${billingCycle === 'monthly' ? 'text-primary' : 'text-text-secondary'}`}>Mensal</span>
-                    <button
-                        onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annual' : 'monthly')}
-                        className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-light-blue`}
-                        role="switch"
-                        aria-checked={billingCycle === 'annual'}
-                    >
-                        <span className="sr-only">Alternar plano de pagamento</span>
-                        <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${billingCycle === 'annual' ? 'translate-x-5' : 'translate-x-0'}`} />
+                
+                <div id="pricing-selector" className={`mt-10 flex justify-center items-center gap-4 transition-all duration-700 ease-out delay-200 ${inView ? 'opacity-100' : 'opacity-0'}`}>
+                    <span className={`font-medium ${billingCycle === 'monthly' ? 'text-primary' : 'text-text-secondary'}`}>Mensal</span>
+                    <button onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'annually' : 'monthly')} className="relative inline-flex items-center h-6 rounded-full w-11 transition-colors bg-slate-300">
+                        <span className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform ${billingCycle === 'annually' ? 'translate-x-6' : 'translate-x-1'}`} />
                     </button>
-                    <span className={`font-semibold relative transition-colors ${billingCycle === 'annual' ? 'text-primary' : 'text-text-secondary'}`}>
-                        Anual
-                        <span className={`absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold px-3 py-1 rounded-full transform transition-all duration-300 ease-out ${billingCycle === 'annual' ? 'bg-primary text-white shadow-lg shadow-primary/30 scale-100 opacity-100' : 'scale-90 opacity-0 pointer-events-none'}`}>
-                            2 meses grátis
-                        </span>
+                    <span className={`font-medium ${billingCycle === 'annually' ? 'text-primary' : 'text-text-secondary'}`}>
+                        Anual <span className="hidden sm:inline-block ml-1 px-2 py-0.5 bg-secondary/10 text-secondary text-xs font-bold rounded-full">Economize 2 meses</span>
                     </span>
                 </div>
-                <div className="mt-16 flex flex-col lg:flex-row items-center lg:items-end justify-center gap-8 lg:gap-4">
-                    {plansData.map((plan, index) => (
-                        <div key={plan.name} className={`w-full max-w-sm relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{transitionDelay: `${index * 150 + 200}ms`}}>
-                             <PlanCard plan={plan} billingCycle={billingCycle} />
+
+                {/* Desktop View */}
+                <div className="mt-12 hidden lg:grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                    {plans.map((plan, index) => (
+                        <div key={plan.name} className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{transitionDelay: `${index * 150 + 300}ms`}}>
+                           <PlanCard plan={plan} />
                         </div>
                     ))}
                 </div>
+
+                {/* Mobile Tab View */}
+                <div className="mt-8 lg:hidden">
+                    <div className="p-1 bg-slate-100 rounded-lg flex justify-between items-center">
+                        {plans.map(plan => (
+                             <button 
+                                key={plan.name}
+                                onClick={() => setActiveMobileTab(plan.name)}
+                                className={`w-full text-center py-2 px-1 rounded-md text-sm font-semibold transition-colors relative ${activeMobileTab === plan.name ? 'bg-primary text-white shadow' : 'text-text-secondary hover:bg-slate-200'}`}
+                             >
+                                {plan.name}
+                                {plan.popular && activeMobileTab !== plan.name && <span className="absolute -top-2 -right-2 block h-3 w-3 rounded-full bg-primary ring-2 ring-white"></span>}
+                             </button>
+                        ))}
+                    </div>
+                    <div className="mt-4">
+                        {activeMobilePlan && <PlanCard plan={activeMobilePlan} />}
+                    </div>
+                </div>
+
             </div>
         </section>
     );

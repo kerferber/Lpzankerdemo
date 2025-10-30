@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -15,12 +16,14 @@
           extend: {
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
+              display: ['Clash Display', 'sans-serif'],
             },
             colors: {
               primary: {
                 DEFAULT: '#2563EB',
                 dark: '#1E40FF'
               },
+              secondary: '#10B981',
               light: {
                 blue: '#EFF6FF',
                 gray: '#F8FAFC',
@@ -33,6 +36,12 @@
             boxShadow: {
               'card-hover': '0 12px 24px rgba(0,0,0,0.08)',
               'mockup': '0 20px 40px rgba(0,0,0,0.06)',
+            },
+            backgroundImage: {
+              'dot-pattern': "radial-gradient(circle, #DDEAFE 1px, transparent 1px)",
+            },
+            backgroundSize: {
+              'dot-pattern': '20px 20px',
             },
             animation: {
               'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
