@@ -66,7 +66,7 @@ const Hero: React.FC = () => {
           <div className="flex justify-center mt-12 lg:mt-0">
             <div className={`relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{ transitionDelay: '300ms'}}>
               <img
-                src="https://images.pexels.com/photos/4348401/pexels-photo-4348401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                src="https://raw.githubusercontent.com/kerferber/Lpzankerdemo/refs/heads/main/heroimg001.png"
                 alt="Dashboard do sistema Zanker"
                 className="rounded-xl shadow-xl relative z-10 animate-float"
                 loading="lazy"

@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import SocialProof from './components/SocialProof';
 import ClientLogos from './components/ClientLogos';
+import FeatureShowcase from './components/FeatureShowcase';
 import Features from './components/Features';
 import DashboardDemo from './components/DashboardDemo';
 import HowItWorks from './components/HowItWorks';
@@ -22,6 +23,7 @@ function App() {
         <Hero />
         <SocialProof />
         <ClientLogos />
+        <FeatureShowcase />
         <Features />
         <DashboardDemo />
         <HowItWorks />
