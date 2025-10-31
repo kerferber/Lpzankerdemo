@@ -126,11 +126,11 @@ const SocialProof: React.FC = () => {
                 const isCurrent = index === activeIndex;
                 const isPrevious = index === (activeIndex - 1 + profiles.length) % profiles.length;
 
-                let positionClasses = 'translate-x-full opacity-0 blur-sm'; // Default to waiting on the right
+                let positionClasses = 'translate-x-full opacity-0 blur-md'; // Default to waiting on the right
                 if (isCurrent) {
                     positionClasses = 'translate-x-0 opacity-100 blur-0';
                 } else if (isPrevious) {
-                    positionClasses = '-translate-x-full opacity-0 blur-sm';
+                    positionClasses = '-translate-x-full opacity-0 blur-md';
                 }
                 
                 return (
