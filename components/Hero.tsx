@@ -53,9 +53,9 @@ const Hero: React.FC = () => {
           <div className="text-center lg:text-left">
             <h1 className={`font-display text-4xl md:text-5xl font-semibold text-text-main leading-tight tracking-normal transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
               Entrega de <span className="text-primary">obras</span> no prazo.
-              <br className="hidden lg:block" />{' '}
+              <br />
               <span className="text-primary">Orçamento</span> sob controle.
-              <br className="hidden lg:block" />{' '}
+              <br />
               <span className="text-primary">Escritório</span> em pleno comando.
             </h1>
             <p className={`mt-6 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0 transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '200ms'}}>
