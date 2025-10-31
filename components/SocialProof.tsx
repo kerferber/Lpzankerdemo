@@ -121,18 +121,30 @@ const SocialProof: React.FC = () => {
         </div>
         
         {/* Mobile Carousel */}
-        <div className="md:hidden mt-10 h-40 relative">
-            {profiles.map((profile, index) => (
-                <div 
-                    key={profile.name}
-                    className={`absolute inset-0 flex flex-col items-center justify-center gap-4 transition-opacity duration-500 ease-in-out ${activeIndex === index ? 'opacity-100' : 'opacity-0'}`}
-                >
-                    <div className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-sm border border-slate-200/80">
-                        {profile.icon}
+        <div className="md:hidden mt-10 h-40 relative overflow-hidden">
+            {profiles.map((profile, index) => {
+                const isCurrent = index === activeIndex;
+                const isPrevious = index === (activeIndex - 1 + profiles.length) % profiles.length;
+
+                let positionClasses = 'translate-x-full opacity-0 blur-sm'; // Default to waiting on the right
+                if (isCurrent) {
+                    positionClasses = 'translate-x-0 opacity-100 blur-0';
+                } else if (isPrevious) {
+                    positionClasses = '-translate-x-full opacity-0 blur-sm';
+                }
+                
+                return (
+                    <div 
+                        key={profile.name}
+                        className={`absolute inset-0 flex flex-col items-center justify-center gap-4 transition-all duration-500 ease-in-out ${positionClasses}`}
+                    >
+                        <div className="flex items-center justify-center w-24 h-24 bg-white rounded-full shadow-sm border border-slate-200/80">
+                            {profile.icon}
+                        </div>
+                        <h3 className="text-xl font-bold text-text-main">{profile.name}</h3>
                     </div>
-                    <h3 className="text-xl font-bold text-text-main">{profile.name}</h3>
-                </div>
-            ))}
+                );
+            })}
         </div>
       </div>
     </section>
