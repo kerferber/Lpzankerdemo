@@ -6,12 +6,19 @@ const CheckCircleIcon: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+const advantages = [
+    { text: 'Reduza até 18% de desperdício de material.' },
+    { text: 'Elimine surpresas no cronograma físico-financeiro.' },
+    { text: 'Veja custo previsto × custo real em tempo real.' }
+];
 
 const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
+  const [activeAdvantage, setActiveAdvantage] = useState(0);
   
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -19,7 +26,7 @@ const Hero: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: isMobile ? 0.2 : 0.4 }
     );
 
     if (sectionRef.current) {
@@ -28,17 +35,31 @@ const Hero: React.FC = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+      if (window.innerWidth >= 640) return; // Only run animation on mobile
+
+      const interval = setInterval(() => {
+          setActiveAdvantage(prev => (prev + 1) % advantages.length);
+      }, 4000); // Change advantage every 4 seconds
+
+      return () => clearInterval(interval);
+  }, []);
   
   return (
-    <section id="hero" className="pt-40 pb-24 bg-light-blue bg-dot-pattern bg-dot-pattern-size overflow-hidden">
+    <section id="hero" className="pt-28 pb-16 md:pt-40 md:pb-24 bg-light-blue bg-dot-pattern bg-dot-pattern-size overflow-hidden">
       <div ref={sectionRef} className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="text-center lg:text-left">
             <h1 className={`font-display text-4xl md:text-5xl font-semibold text-text-main leading-tight tracking-normal transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-              Entrega de <span className="text-primary">obras</span> no prazo. <span className="text-primary">Orçamento</span> sob controle. <span className="text-primary">Escritório</span> em pleno comando.
+              Entrega de <span className="text-primary">obras</span> no prazo.
+              <br className="md:hidden" /> <span className="hidden md:inline"> </span>
+              <span className="text-primary">Orçamento</span> sob controle.
+              <br className="md:hidden" /> <span className="hidden md:inline"> </span>
+              <span className="text-primary">Escritório</span> em pleno comando.
             </h1>
-            <p className={`mt-4 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0 transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '200ms'}}>
-              Planeje, execute e controle seus projetos de engenharia e arquitetura — em um painel único, pensado para quem está no canteiro e no escritório.
+            <p className={`mt-6 text-lg text-text-secondary max-w-xl mx-auto lg:mx-0 transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '200ms'}}>
+              Deixe o caos das planilhas para trás. Tenha o controle total da sua obra, do orçamento à entrega, em um painel que conecta o canteiro ao escritório.
             </p>
             <div className={`mt-8 flex flex-col items-center lg:items-start transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '400ms'}}>
               <a
@@ -49,22 +70,31 @@ const Hero: React.FC = () => {
               </a>
               <p className="mt-3 text-sm text-text-secondary">Sem cartão de crédito. Sem compromisso.</p>
             </div>
-            <div className="mt-8 flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:gap-8">
-              <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '600ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-secondary transition-transform duration-300 group-hover:scale-110" />
-                <span className="text-slate-600 font-medium">Reduza até 18% de desperdício de material.</span>
-              </div>
-              <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '800ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-secondary transition-transform duration-300 group-hover:scale-110" />
-                <span className="text-slate-600 font-medium">Elimine surpresas no cronograma físico-financeiro.</span>
-              </div>
-              <div className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '1000ms'}}>
-                <CheckCircleIcon className="w-7 h-7 text-secondary transition-transform duration-300 group-hover:scale-110" />
-                <span className="text-slate-600 font-medium">Veja custo previsto × custo real em tempo real.</span>
-              </div>
+            
+            {/* Desktop Advantages */}
+            <div className="mt-8 hidden sm:flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:gap-8">
+              {advantages.map((advantage, index) => (
+                <div key={advantage.text} className={`group flex items-center gap-3 rounded-lg p-2 -m-2 transition-colors duration-200 hover:bg-white/60 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: `${600 + index * 200}ms`}}>
+                  <CheckCircleIcon className="w-7 h-7 text-secondary transition-transform duration-300 group-hover:scale-110 flex-shrink-0" />
+                  <span className="text-slate-600 font-medium">{advantage.text}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile Animated Advantages (Now hidden on mobile) */}
+            <div className={`hidden mt-8 relative h-12 transition-all duration-600 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: `600ms`}}>
+                {advantages.map((advantage, index) => (
+                    <div 
+                        key={advantage.text}
+                        className={`absolute inset-0 flex items-center justify-center gap-3 transition-opacity duration-500 ease-in-out ${activeAdvantage === index ? 'opacity-100' : 'opacity-0'}`}
+                    >
+                        <CheckCircleIcon className="w-7 h-7 text-secondary flex-shrink-0" />
+                        <span className="text-slate-600 font-medium text-center">{advantage.text}</span>
+                    </div>
+                ))}
             </div>
           </div>
-          <div className="flex justify-center mt-12 lg:mt-0">
+          <div className="flex justify-center mt-8 lg:mt-0">
             <div className={`relative transition-all duration-700 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
               <img
                 src="https://raw.githubusercontent.com/kerferber/zankerimg/main/img02hero.png"

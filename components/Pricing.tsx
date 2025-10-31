@@ -55,6 +55,7 @@ const Pricing: React.FC = () => {
     const [inView, setInView] = useState(false);
 
     useEffect(() => {
+        const isMobile = window.innerWidth < 768;
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -62,7 +63,7 @@ const Pricing: React.FC = () => {
                     observer.disconnect();
                 }
             },
-            { threshold: 0.2 }
+            { threshold: isMobile ? 0.15 : 0.2 }
         );
 
         if (sectionRef.current) {

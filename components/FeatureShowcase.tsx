@@ -89,6 +89,7 @@ const FeatureShowcase: React.FC = () => {
   const [swipeStartX, setSwipeStartX] = useState(0);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -96,7 +97,7 @@ const FeatureShowcase: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: isMobile ? 0.2 : 0.4 }
     );
 
     if (sectionRef.current) {

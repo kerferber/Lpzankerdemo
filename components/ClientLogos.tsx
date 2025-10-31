@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+const logos = ['ARQTEC', 'ENG.', 'CONSTRUCT', 'PROJETO', 'INNOVA', 'OBRA+'];
+
 const LogoPlaceholder = ({ name }: { name: string }) => (
-  <div className="flex items-center justify-center h-16 w-40 bg-slate-200/50 rounded-lg">
-    <span className="text-slate-500 font-bold tracking-widest">{name}</span>
+  <div className="flex items-center justify-center h-16 w-40 bg-slate-800 group-hover:bg-slate-700 rounded-lg transition-colors duration-300">
+    <span className="text-slate-400 group-hover:text-white font-bold tracking-widest transition-colors duration-300">{name}</span>
   </div>
 );
 
@@ -11,6 +13,7 @@ const ClientLogos: React.FC = () => {
     const [inView, setInView] = useState(false);
   
     useEffect(() => {
+      const isMobile = window.innerWidth < 768;
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
@@ -18,7 +21,7 @@ const ClientLogos: React.FC = () => {
             observer.disconnect();
           }
         },
-        { threshold: 0.4 }
+        { threshold: isMobile ? 0.2 : 0.4 }
       );
   
       if (sectionRef.current) {
@@ -28,17 +31,26 @@ const ClientLogos: React.FC = () => {
     }, []);
 
   return (
-    <section ref={sectionRef} className="py-16 bg-white">
+    <section ref={sectionRef} className="py-16 bg-slate-900 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className={`text-center text-lg font-semibold text-text-secondary tracking-wider transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+        <h2 className={`text-center text-lg font-semibold text-slate-400 tracking-wider transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           Empresas que confiam na Zanker para gerenciar suas obras
         </h2>
-        <div className={`mt-8 flex flex-wrap justify-center items-center gap-x-12 gap-y-8`}>
-          {['ARQTEC', 'ENG.', 'CONSTRUCT', 'PROJETO', 'INNOVA'].map((name, index) => (
-            <div key={index} className={`grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500 ease-out ${inView ? 'opacity-60 scale-100' : 'opacity-0 scale-90'}`} style={{ transitionDelay: `${index * 100 + 200}ms` }}>
-                <LogoPlaceholder name={name} />
-            </div>
-          ))}
+        <div className={`mt-8 w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]`}>
+            <ul className="flex items-center justify-center md:justify-start [&_li]:mx-4 animate-marquee hover:[animation-play-state:paused]">
+                {logos.map((name) => (
+                    <li key={name} className="group">
+                        <LogoPlaceholder name={name} />
+                    </li>
+                ))}
+            </ul>
+            <ul className="flex items-center justify-center md:justify-start [&_li]:mx-4 animate-marquee hover:[animation-play-state:paused]" aria-hidden="true">
+                {logos.map((name) => (
+                    <li key={name} className="group">
+                        <LogoPlaceholder name={name} />
+                    </li>
+                ))}
+            </ul>
         </div>
       </div>
     </section>

@@ -4,25 +4,26 @@ const FloatingBanner: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
     
     useEffect(() => {
-        const pricingSelector = document.getElementById('pricing-selector');
-
         const toggleVisibility = () => {
+            // Query for the element inside the handler to avoid race conditions on mount
+            const pricingSection = document.getElementById('pricing');
             const hasScrolledEnough = window.scrollY > 500;
-            
-            if (!pricingSelector) {
-                // Fallback behavior if the pricing selector isn't found
+
+            if (!pricingSection) {
+                // If the section isn't found, fall back to simple scroll depth
                 setIsVisible(hasScrolledEnough);
                 return;
             }
             
-            // Disappears when the top of the selector is at or above the viewport bottom edge
-            const selectorIsInView = pricingSelector.getBoundingClientRect().top <= window.innerHeight;
+            // The banner should disappear when the top of the pricing section becomes visible
+            const sectionIsEnteringView = pricingSection.getBoundingClientRect().top <= window.innerHeight;
 
-            setIsVisible(hasScrolledEnough && !selectorIsInView);
+            // Show banner if scrolled enough AND the pricing section is NOT yet in view
+            setIsVisible(hasScrolledEnough && !sectionIsEnteringView);
         };
 
         window.addEventListener('scroll', toggleVisibility, { passive: true });
-        toggleVisibility(); // Check visibility on initial render
+        toggleVisibility(); // Initial check
 
         return () => window.removeEventListener('scroll', toggleVisibility);
     }, []);

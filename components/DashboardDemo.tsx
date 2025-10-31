@@ -57,6 +57,7 @@ const DashboardDemo: React.FC = () => {
   const [hoveredTooltip, setHoveredTooltip] = useState<string | null>(null);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -64,7 +65,7 @@ const DashboardDemo: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: isMobile ? 0.2 : 0.4 }
     );
 
     if (sectionRef.current) {

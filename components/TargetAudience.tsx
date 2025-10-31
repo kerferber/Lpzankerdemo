@@ -36,6 +36,7 @@ const TargetAudience: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -43,7 +44,7 @@ const TargetAudience: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: isMobile ? 0.2 : 0.4 }
     );
 
     if (sectionRef.current) {

@@ -5,6 +5,7 @@ const FinalCta: React.FC = () => {
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -12,7 +13,7 @@ const FinalCta: React.FC = () => {
           observer.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: isMobile ? 0.2 : 0.4 }
     );
 
     if (sectionRef.current) {

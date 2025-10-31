@@ -50,6 +50,7 @@
               'slide-in-from-left': 'slide-in-from-left 0.8s ease-out forwards',
               'slide-in-from-right': 'slide-in-from-right 0.8s ease-out forwards',
               'fade-in': 'fade-in 0.4s ease-out forwards',
+              'marquee': 'marquee 30s linear infinite',
             },
             keyframes: {
               'fade-in-up': {
@@ -76,6 +77,10 @@
               'fade-in': {
                 '0%': { opacity: '0' },
                 '100%': { opacity: '1' },
+              },
+              'marquee': {
+                'from': { transform: 'translateX(0)' },
+                'to': { transform: 'translateX(-100%)' },
               },
             }
           }
