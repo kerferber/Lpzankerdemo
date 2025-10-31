@@ -29,7 +29,8 @@ const AnimatedPrice: React.FC<{ price: string }> = ({ price: endPriceStr }) => {
         const startPrice = previousPriceRef.current;
         previousPriceRef.current = endPrice;
 
-        if (startPrice === endPrice) {
+        if (startPrice === endPrice || isNaN(endPrice) || isNaN(startPrice)) {
+            if (!isNaN(endPrice)) setDisplayPrice(endPrice);
             return;
         }
 
@@ -57,6 +58,8 @@ const AnimatedPrice: React.FC<{ price: string }> = ({ price: endPriceStr }) => {
             }
         };
     }, [endPrice]);
+    
+    if (isNaN(endPrice)) return null;
 
     return (
         <p className="text-4xl font-bold text-text-main">
@@ -66,7 +69,7 @@ const AnimatedPrice: React.FC<{ price: string }> = ({ price: endPriceStr }) => {
 };
 
 
-const PlanCard: React.FC<{plan: typeof pricingPlans.monthly[0]}> = ({ plan }) => (
+const PlanCard: React.FC<{plan: typeof pricingPlans.monthly[0], billingCycle: string}> = ({ plan, billingCycle }) => (
     <div className={`relative p-8 bg-white border rounded-xl flex flex-col h-full ${plan.popular ? 'border-primary shadow-xl' : 'border-slate-200'}`}>
         {plan.popular && <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow">Mais Popular</div>}
         <h3 className="text-xl font-bold text-text-main">{plan.name}</h3>
@@ -75,7 +78,7 @@ const PlanCard: React.FC<{plan: typeof pricingPlans.monthly[0]}> = ({ plan }) =>
             {plan.price === 'Customizado' ? (
                 <p className="text-4xl font-bold text-text-main">Customizado</p>
             ) : (
-                <AnimatedPrice price={plan.price} />
+                <AnimatedPrice key={plan.name} price={plan.price} />
             )}
         </div>
         <a href="#cta" className={`mt-8 block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all active:scale-95 ${plan.popular ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-light-blue text-primary hover:bg-blue-200'}`}>
@@ -100,6 +103,7 @@ const Pricing: React.FC = () => {
     const sliderRef = useRef<HTMLDivElement>(null);
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
     const isScrollingProgrammatically = useRef(false);
+    const isInitialSetupComplete = useRef(false);
     const [inView, setInView] = useState(false);
     
     useEffect(() => {
@@ -123,13 +127,52 @@ const Pricing: React.FC = () => {
         }
         return () => observer.disconnect();
     }, []);
+
+    const scrollToCard = (index: number, behavior: 'smooth' | 'auto' = 'smooth') => {
+        const cardElement = cardRefs.current[index];
+        if (cardElement && sliderRef.current) {
+            isScrollingProgrammatically.current = true;
+            sliderRef.current.scrollTo({
+                left: cardElement.offsetLeft - sliderRef.current.offsetLeft,
+                behavior: behavior
+            });
+            setTimeout(() => { isScrollingProgrammatically.current = false; }, 500); // Wait for scroll to finish
+        }
+    };
     
+    // Handles the complete initial setup on mobile
+    useEffect(() => {
+        if (inView && !isInitialSetupComplete.current && window.innerWidth < 1024) {
+            const initialIndex = 1; // 'Profissional'
+            
+            // 1. Set the active tab state to ensure it's correct from the start.
+            setActiveMobilePlanIndex(initialIndex);
+            
+            // 2. Scroll the card carousel to the correct position.
+            const scrollTimer = setTimeout(() => {
+                scrollToCard(initialIndex, 'auto');
+            }, 100);
+            
+            // 3. Mark setup as complete after animations are done, so the user-scroll observer can take over.
+            const setupCompleteTimer = setTimeout(() => {
+                isInitialSetupComplete.current = true;
+            }, 600); 
+
+            return () => {
+              clearTimeout(scrollTimer);
+              clearTimeout(setupCompleteTimer);
+            };
+        }
+    }, [inView]);
+
+    // Handles user-driven swipes on the carousel
     useEffect(() => {
         if (window.innerWidth >= 1024 || !inView || !sliderRef.current) return;
     
         const observer = new IntersectionObserver(
             (entries) => {
-                if (isScrollingProgrammatically.current) return;
+                // Do not update state if initial setup isn't done or if a programmatic scroll is happening.
+                if (!isInitialSetupComplete.current || isScrollingProgrammatically.current) return;
     
                 for (const entry of entries) {
                     if (entry.isIntersecting) {
@@ -156,18 +199,6 @@ const Pricing: React.FC = () => {
         };
     }, [inView, billingCycle]);
 
-    const scrollToCard = (index: number) => {
-        const cardElement = cardRefs.current[index];
-        if (cardElement && sliderRef.current) {
-            isScrollingProgrammatically.current = true;
-            sliderRef.current.scrollTo({
-                left: cardElement.offsetLeft - sliderRef.current.offsetLeft,
-                behavior: 'smooth'
-            });
-            setTimeout(() => { isScrollingProgrammatically.current = false; }, 500);
-        }
-    };
-    
     const handleTabClick = (index: number) => {
         setActiveMobilePlanIndex(index);
         scrollToCard(index);
@@ -200,7 +231,7 @@ const Pricing: React.FC = () => {
                 <div className="mt-12 hidden lg:grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                     {plans.map((plan, index) => (
                         <div key={plan.name} className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{transitionDelay: `${index * 150 + 300}ms`}}>
-                           <PlanCard plan={plan} />
+                           <PlanCard plan={plan} billingCycle={billingCycle} />
                         </div>
                     ))}
                 </div>
@@ -226,11 +257,11 @@ const Pricing: React.FC = () => {
                     >
                         {plans.map((plan, index) => (
                             <div
-                                key={`${plan.name}-${billingCycle}`}
+                                key={plan.name}
                                 ref={el => { cardRefs.current[index] = el; }}
                                 className="flex-shrink-0 snap-center w-[90%]"
                             >
-                                <PlanCard plan={plan} />
+                                <PlanCard plan={plan} billingCycle={billingCycle} />
                             </div>
                         ))}
                     </div>

@@ -1,25 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const FloatingBanner: React.FC = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const heroRef = useRef<HTMLElement | null>(null);
+    const pricingRef = useRef<HTMLElement | null>(null);
     
     useEffect(() => {
-        const toggleVisibility = () => {
-            // Query for the element inside the handler to avoid race conditions on mount
-            const pricingSection = document.getElementById('pricing');
-            const hasScrolledEnough = window.scrollY > 500;
+        // We find the elements once and store them in refs for efficiency
+        heroRef.current = document.getElementById('hero');
+        pricingRef.current = document.getElementById('pricing');
 
-            if (!pricingSection) {
-                // If the section isn't found, fall back to simple scroll depth
-                setIsVisible(hasScrolledEnough);
+        const toggleVisibility = () => {
+            if (!heroRef.current || !pricingRef.current) {
+                setIsVisible(false);
                 return;
             }
             
-            // The banner should disappear when the top of the pricing section becomes visible
-            const sectionIsEnteringView = pricingSection.getBoundingClientRect().top <= window.innerHeight;
+            const heroRect = heroRef.current.getBoundingClientRect();
+            const pricingRect = pricingRef.current.getBoundingClientRect();
+            
+            // Condition to SHOW: The hero section is mostly scrolled out of view (its bottom is near the top of the viewport).
+            const hasScrolledPastHero = heroRect.bottom < 150;
+            
+            // Condition to HIDE: The top of the pricing section is visible on screen.
+            const pricingSectionIsVisible = pricingRect.top < window.innerHeight;
 
-            // Show banner if scrolled enough AND the pricing section is NOT yet in view
-            setIsVisible(hasScrolledEnough && !sectionIsEnteringView);
+            // The banner is visible if we've scrolled past the hero AND the pricing section is not yet visible.
+            setIsVisible(hasScrolledPastHero && !pricingSectionIsVisible);
         };
 
         window.addEventListener('scroll', toggleVisibility, { passive: true });

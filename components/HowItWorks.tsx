@@ -54,24 +54,26 @@ const HowItWorks: React.FC = () => {
                     </p>
                 </div>
                 <div className="mt-16 relative">
-                    {/* Dashed line for desktop */}
-                    <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 border-t-2 border-dashed border-primary/40 -translate-y-1/2"></div>
+                    {/* Dashed line for desktop with animation */}
+                    <div className={`hidden lg:block absolute top-12 left-0 w-full border-t-2 border-dashed border-primary/40 transform origin-left transition-transform duration-1000 ease-out ${inView ? 'scale-x-100' : 'scale-x-0'}`} style={{ transitionDelay: '300ms' }}></div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 relative">
                         {steps.map((step, index) => (
-                            <div 
-                                key={step.number}
-                                className={`text-center transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                                style={{ transitionDelay: `${index * 200 + 200}ms` }}
-                            >
+                            <div key={step.number} className="text-center">
                                 <div className="relative inline-block">
-                                    <div className="flex items-center justify-center w-24 h-24 mx-auto bg-white rounded-full shadow-lg border-2 border-primary/20">
+                                    <div className={`flex items-center justify-center w-24 h-24 mx-auto bg-white rounded-full shadow-lg border-2 border-primary/20 transition-all duration-500 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`} style={{ transitionDelay: `${index * 200 + 200}ms` }}>
                                         {step.icon}
                                     </div>
-                                    <span className="absolute -top-3 -right-3 flex items-center justify-center w-12 h-12 bg-primary text-white font-bold text-xl rounded-full border-4 border-light-gray">{step.number}</span>
+                                    <span className={`absolute -top-3 -right-3 flex items-center justify-center w-12 h-12 bg-primary text-white font-bold text-xl rounded-full border-4 border-light-gray transition-all duration-300 ease-out ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`} style={{ transitionDelay: `${index * 200 + 400}ms` }}>
+                                        {step.number}
+                                    </span>
                                 </div>
-                                <h3 className="mt-6 text-2xl font-bold text-text-main">{step.title}</h3>
-                                <p className="mt-2 text-text-secondary">{step.description}</p>
+                                <h3 className={`mt-6 text-2xl font-bold text-text-main transition-all duration-500 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: `${index * 200 + 300}ms` }}>
+                                    {step.title}
+                                </h3>
+                                <p className={`mt-2 text-text-secondary transition-all duration-500 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: `${index * 200 + 400}ms` }}>
+                                    {step.description}
+                                </p>
                             </div>
                         ))}
                     </div>
