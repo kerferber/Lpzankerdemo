@@ -10,12 +10,12 @@ const pricingPlans = {
     monthly: [
         { name: 'Básico', price: '299', description: 'Para profissionais autônomos e pequenos escritórios.', features: ['2 Usuários', '5 Projetos ativos', 'Orçamento e cronograma', 'Diário de obra', 'Suporte via e-mail'], cta: 'Começar agora' },
         { name: 'Profissional', price: '599', description: 'Para escritórios em crescimento e construtoras.', features: ['10 Usuários', 'Projetos ilimitados', 'Tudo do Básico, e mais:', 'Portal do Cliente', 'Módulo de Compras', 'Relatórios Avançados', 'Suporte prioritário'], cta: 'Escolher Profissional', popular: true },
-        { name: 'Empresa', price: 'Customizado', description: 'Para grandes construtoras e incorporadoras.', features: ['Usuários ilimitados', 'Tudo do Profissional, e mais:', 'Gestão de RH', 'CRM de Vendas', 'Onboarding personalizado', 'Gerente de conta dedicado'], cta: 'Fale conosco', popular: false },
+        { name: 'Empresa', price: '899', description: 'Para grandes construtoras e incorporadoras.', features: ['Usuários ilimitados', 'Tudo do Profissional, e mais:', 'Gestão de RH', 'CRM de Vendas', 'Onboarding personalizado', 'Gerente de conta dedicado'], cta: 'Escolher Empresa', popular: false },
     ],
     annually: [
         { name: 'Básico', price: '249', description: 'Para profissionais autônomos e pequenos escritórios.', features: ['2 Usuários', '5 Projetos ativos', 'Orçamento e cronograma', 'Diário de obra', 'Suporte via e-mail'], cta: 'Começar agora' },
         { name: 'Profissional', price: '499', description: 'Para escritórios em crescimento e construtoras.', features: ['10 Usuários', 'Projetos ilimitados', 'Tudo do Básico, e mais:', 'Portal do Cliente', 'Módulo de Compras', 'Relatórios Avançados', 'Suporte prioritário'], cta: 'Escolher Profissional', popular: true },
-        { name: 'Empresa', price: 'Customizado', description: 'Para grandes construtoras e incorporadoras.', features: ['Usuários ilimitados', 'Tudo do Profissional, e mais:', 'Gestão de RH', 'CRM de Vendas', 'Onboarding personalizado', 'Gerente de conta dedicado'], cta: 'Fale conosco', popular: false },
+        { name: 'Empresa', price: '749', description: 'Para grandes construtoras e incorporadoras.', features: ['Usuários ilimitados', 'Tudo do Profissional, e mais:', 'Gestão de RH', 'CRM de Vendas', 'Onboarding personalizado', 'Gerente de conta dedicado'], cta: 'Escolher Empresa', popular: false },
     ]
 };
 
