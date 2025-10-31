@@ -76,7 +76,7 @@ const Pricing: React.FC = () => {
     const activeMobilePlan = plans.find(p => p.name === activeMobileTab);
 
     return (
-        <section ref={sectionRef} id="pricing" className="py-16 md:py-24 bg-white overflow-hidden">
+        <section ref={sectionRef} id="pricing" className="pt-12 pb-16 md:py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
                     <p className="text-primary font-semibold tracking-wider uppercase mb-2">Planos e Preços</p>

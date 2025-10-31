@@ -91,7 +91,7 @@ const SocialProof: React.FC = () => {
   }, [inView, startAutoplay]);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-24 bg-light-blue bg-dot-pattern bg-dot-pattern-size overflow-hidden">
+    <section ref={sectionRef} className="pt-8 pb-16 md:py-24 bg-light-blue bg-dot-pattern bg-dot-pattern-size overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className={`max-w-4xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">
