@@ -136,7 +136,7 @@ const FeatureShowcase: React.FC = () => {
     <section ref={sectionRef} id="feature-showcase" className="py-16 md:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-          <h2 className="text-4xl font-extrabold text-text-main tracking-tight leading-tight">Explore a plataforma em detalhes</h2>
+          <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">Explore a plataforma em detalhes</h2>
           <p className="mt-4 text-lg text-text-secondary">
             Veja como cada módulo do Zanker foi pensado para resolver os desafios do seu dia a dia.
           </p>

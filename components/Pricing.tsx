@@ -80,7 +80,7 @@ const Pricing: React.FC = () => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
                     <p className="text-primary font-semibold tracking-wider uppercase mb-2">Planos e Preços</p>
-                    <h2 className="font-display text-4xl font-semibold text-text-main tracking-normal leading-tight">Escolha o plano que se encaixa no seu negócio.</h2>
+                    <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">Escolha o plano que se encaixa no seu negócio.</h2>
                     <p className="mt-4 text-lg text-text-secondary">
                         Comece com 14 dias grátis. Cancele quando quiser.
                     </p>

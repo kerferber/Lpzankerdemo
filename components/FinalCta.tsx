@@ -27,7 +27,7 @@ const FinalCta: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={sectionRef} className="relative isolate overflow-hidden bg-gradient-to-br from-primary to-blue-700 px-8 py-20 text-center shadow-2xl rounded-3xl sm:px-16">
             <div className={`transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-              <h2 className="font-display text-3xl font-semibold text-white tracking-normal leading-tight">
+              <h2 className="font-display text-3xl font-bold text-white tracking-normal leading-tight">
                 Deixe de correr atrás e comece a liderar a obra.
               </h2>
             </div>

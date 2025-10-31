@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
       <div ref={sectionRef} className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="text-center lg:text-left">
-            <h1 className={`font-display text-4xl md:text-5xl font-semibold text-text-main leading-tight tracking-normal transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
+            <h1 className={`font-display text-4xl md:text-5xl font-extrabold text-text-main leading-tight tracking-normal transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
               Entrega de <span className="text-primary">obras</span> no prazo.
               <br />
               <span className="text-primary">Orçamento</span> sob controle.

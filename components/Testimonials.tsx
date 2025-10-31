@@ -132,7 +132,7 @@ const Testimonials: React.FC = () => {
     <section ref={sectionRef} id="testimonials" className="py-16 md:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-          <h2 className="font-display text-4xl font-semibold text-text-main tracking-normal leading-tight">‘Hoje eu sei exatamente onde estou perdendo dinheiro’</h2>
+          <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">‘Hoje eu sei exatamente onde estou perdendo dinheiro’</h2>
           <p className="mt-4 text-lg text-text-secondary">
             A confiança de quem usa e aprova nossa plataforma é nosso maior ativo.
           </p>

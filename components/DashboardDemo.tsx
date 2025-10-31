@@ -78,7 +78,7 @@ const DashboardDemo: React.FC = () => {
     <section ref={sectionRef} id="demo" className="py-16 md:py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-          <h2 className="font-display text-4xl font-semibold text-text-main tracking-normal leading-tight">Veja exatamente onde custo, prazo e qualidade fogem ao controle — e como retomar o comando hoje.</h2>
+          <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">Veja exatamente onde custo, prazo e qualidade fogem ao controle — e como retomar o comando hoje.</h2>
           <p className="mt-4 text-lg text-text-secondary">
             Planeje, execute e controle projetos de engenharia e arquitetura — tudo em um painel criado para quem está no canteiro e no escritório.
           </p>

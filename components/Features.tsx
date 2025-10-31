@@ -96,7 +96,7 @@ const Features: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={sectionRef} className="text-center max-w-3xl mx-auto">
           <p className={`text-primary font-semibold tracking-wider uppercase mb-2 transition-all duration-600 ease-out ${inView ? 'opacity-100' : 'opacity-0'}`}>Ferramentas Poderosas</p>
-          <h2 className={`font-display text-4xl font-semibold text-text-main tracking-normal leading-tight transition-all duration-600 ease-out delay-100 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>As funcionalidades que reduzem desperdício, custos e atrasos.</h2>
+          <h2 className={`font-display text-3xl font-bold text-text-main tracking-normal leading-tight transition-all duration-600 ease-out delay-100 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>As funcionalidades que reduzem desperdício, custos e atrasos.</h2>
           <p className={`mt-4 text-lg text-text-secondary transition-all duration-600 ease-out delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             Desde o planejamento inicial até a entrega final, nossa plataforma oferece as ferramentas certas para cada etapa do seu projeto.
           </p>

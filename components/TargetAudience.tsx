@@ -88,7 +88,7 @@ const TargetAudience: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
           <p className="text-primary font-semibold tracking-wider uppercase mb-2">Feito para você</p>
-          <h2 className="font-display text-4xl font-semibold text-text-main tracking-normal leading-tight">Para escritórios que querem parar de reagir e começar a liderar.</h2>
+          <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">Para escritórios que querem parar de reagir e começar a liderar.</h2>
           <p className="mt-4 text-lg text-text-secondary">
             Seja você um profissional autônomo, um escritório em crescimento ou uma grande construtora, temos a solução certa.
           </p>
