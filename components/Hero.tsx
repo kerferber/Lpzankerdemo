@@ -64,7 +64,7 @@ const Hero: React.FC = () => {
             <div className={`mt-8 flex flex-col items-center lg:items-start transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{ transitionDelay: '400ms'}}>
               <a
                 href="#cta"
-                className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-primary/40 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                className="bg-primary text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-dark transition-all duration-300 transform hover:scale-105 active:scale-100 shadow-lg hover:shadow-primary/40 focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
               >
                 Ver o sistema na prática
               </a>

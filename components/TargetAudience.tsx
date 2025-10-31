@@ -19,7 +19,7 @@ const audienceData = [
 ];
 
 const AudienceCard: React.FC<{ title: string; description: string; icon: React.ReactElement }> = ({ title, description, icon }) => (
-    <div className="bg-white p-8 rounded-xl shadow-lg text-center transition-all duration-300 hover:shadow-primary/20 hover:-translate-y-1.5 h-full">
+    <div className="bg-white p-8 rounded-xl shadow-lg text-center transition-all duration-300 hover:shadow-primary/20 hover:-translate-y-1.5 active:scale-[0.98] active:-translate-y-1 h-full">
     <div className="flex items-center justify-center w-20 h-20 mx-auto bg-light-blue rounded-full mb-6">
       {icon}
     </div>
@@ -87,7 +87,7 @@ const TargetAudience: React.FC = () => {
     <section ref={sectionRef} id="target-audience" className="py-16 md:py-24 bg-light-blue bg-dot-pattern bg-dot-pattern-size overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-          <p className="text-primary font-semibold tracking-wider uppercase mb-2">Feito para você</p>
+          <p className="text-primary font-semibold mb-2">Feito para você</p>
           <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">Para escritórios que querem parar de reagir e começar a liderar.</h2>
           <p className="mt-4 text-lg text-text-secondary">
             Seja você um profissional autônomo, um escritório em crescimento ou uma grande construtora, temos a solução certa.

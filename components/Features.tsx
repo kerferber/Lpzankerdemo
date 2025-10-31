@@ -25,7 +25,7 @@ interface FeatureCardProps {
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ name, description, icon }) => (
-    <div className="group bg-white p-8 rounded-xl border border-slate-200 hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300 h-full">
+    <div className="group bg-white p-8 rounded-xl border border-slate-200 hover:shadow-card-hover hover:-translate-y-1.5 active:scale-[0.98] active:-translate-y-1 transition-all duration-300 h-full">
     <div className="mb-4 transition-transform duration-300 group-hover:scale-110">{icon}</div>
     <h3 className="text-xl font-bold text-text-main mb-2">{name}</h3>
     <p className="text-text-secondary text-base">{description}</p>
@@ -95,7 +95,7 @@ const Features: React.FC = () => {
     <section id="features" className="py-16 md:py-24 bg-light-gray bg-dot-pattern bg-dot-pattern-size overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={sectionRef} className="text-center max-w-3xl mx-auto">
-          <p className={`text-primary font-semibold tracking-wider uppercase mb-2 transition-all duration-600 ease-out ${inView ? 'opacity-100' : 'opacity-0'}`}>Ferramentas Poderosas</p>
+          <p className={`text-primary font-semibold mb-2 transition-all duration-600 ease-out ${inView ? 'opacity-100' : 'opacity-0'}`}>Ferramentas Poderosas</p>
           <h2 className={`font-display text-3xl font-bold text-text-main tracking-normal leading-tight transition-all duration-600 ease-out delay-100 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>As funcionalidades que reduzem desperdício, custos e atrasos.</h2>
           <p className={`mt-4 text-lg text-text-secondary transition-all duration-600 ease-out delay-200 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
             Desde o planejamento inicial até a entrega final, nossa plataforma oferece as ferramentas certas para cada etapa do seu projeto.

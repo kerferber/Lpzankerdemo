@@ -20,7 +20,7 @@ const testimonialsData = [
 ];
 
 const TestimonialCard: React.FC<{ name: string; role: string; avatar: string; quote: string; }> = ({ name, role, avatar, quote }) => (
-    <div className="bg-light-blue p-8 rounded-xl relative overflow-hidden h-full flex flex-col min-w-full">
+    <div className="bg-light-blue p-8 rounded-xl relative overflow-hidden h-full flex flex-col">
         <div className="absolute -top-1 -left-2 text-primary/10" aria-hidden="true">
             <svg width="100" height="100" viewBox="0 0 24 24"><path fill="currentColor" d="M10 7L8 11H11V17H5V11L7 7M18 7L16 11H19V17H13V11L15 7Z"/></svg>
         </div>
@@ -50,31 +50,29 @@ const TestimonialCard: React.FC<{ name: string; role: string; avatar: string; qu
 const Testimonials: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
-  // Fix: Use `ReturnType<typeof setInterval>` for the interval ref to ensure correct typing in a browser environment.
-  const autoplayIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const [inView, setInView] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [dragOffset, setDragOffset] = useState(0);
+  const scrollToCard = (index: number) => {
+    const cardElement = cardRefs.current[index];
+    if (cardElement && sliderRef.current) {
+        sliderRef.current.scrollTo({
+            left: cardElement.offsetLeft - sliderRef.current.offsetLeft,
+            behavior: 'smooth'
+        });
+    }
+  };
 
-  const nextSlide = useCallback(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonialsData.length);
-  }, []);
+  const nextSlide = () => {
+    const newIndex = (currentIndex + 1) % testimonialsData.length;
+    scrollToCard(newIndex);
+  };
 
   const prevSlide = () => {
-      setCurrentIndex((prev) => (prev - 1 + testimonialsData.length) % testimonialsData.length);
-  };
-  
-  const startAutoplay = useCallback(() => {
-    if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
-    autoplayIntervalRef.current = setInterval(nextSlide, 8000);
-  }, [nextSlide]);
-
-  const stopAutoplay = () => {
-    if (autoplayIntervalRef.current) clearInterval(autoplayIntervalRef.current);
+    const newIndex = (currentIndex - 1 + testimonialsData.length) % testimonialsData.length;
+    scrollToCard(newIndex);
   };
 
   useEffect(() => {
@@ -91,42 +89,37 @@ const Testimonials: React.FC = () => {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
+  
   useEffect(() => {
-    if (inView) {
-        startAutoplay();
-    }
-    return stopAutoplay;
-  }, [inView, startAutoplay]);
+    if (!inView || !sliderRef.current) return;
 
-  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
-    stopAutoplay();
-    setIsDragging(true);
-    setStartX('touches' in e ? e.touches[0].clientX : e.clientX);
-    if(sliderRef.current) sliderRef.current.style.transition = 'none';
-  };
-
-  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDragging) return;
-    const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX;
-    setDragOffset(currentX - startX);
-  };
-
-  const handleDragEnd = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-
-    if(sliderRef.current) sliderRef.current.style.transition = 'transform 0.5s ease-in-out';
+    const observer = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
+                    if (index > -1) {
+                        setCurrentIndex(index);
+                        return;
+                    }
+                }
+            }
+        },
+        { root: sliderRef.current, threshold: 0.6 }
+    );
     
-    if (dragOffset < -50) {
-        nextSlide();
-    } else if (dragOffset > 50) {
-        prevSlide();
-    }
+    const currentCardRefs = cardRefs.current;
+    currentCardRefs.forEach(card => {
+        if (card) observer.observe(card);
+    });
     
-    setDragOffset(0);
-    startAutoplay();
-  };
+    return () => {
+        currentCardRefs.forEach(card => {
+            if (card) observer.unobserve(card);
+        });
+    };
+}, [inView]);
+
 
   return (
     <section ref={sectionRef} id="testimonials" className="pt-16 pb-0 md:py-24 bg-white overflow-hidden">
@@ -138,26 +131,17 @@ const Testimonials: React.FC = () => {
           </p>
         </div>
         <div className="mt-16 max-w-5xl mx-auto relative">
-          <div 
-            className="overflow-hidden cursor-grab active:cursor-grabbing"
-            onMouseDown={handleDragStart}
-            onMouseMove={handleDragMove}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-            onTouchStart={handleDragStart}
-            onTouchMove={handleDragMove}
-            onTouchEnd={handleDragEnd}
-          >
+          <div className="overflow-hidden">
              <div 
                 ref={sliderRef}
-                className="flex" 
-                style={{ 
-                  transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
-                  transition: isDragging ? 'none' : 'transform 0.5s ease-in-out',
-                }}
+                className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-1"
               >
-                  {testimonialsData.map((testimonial) => (
-                      <div key={testimonial.name} className="w-full flex-shrink-0 px-1" style={{ userSelect: 'none' }}>
+                  {testimonialsData.map((testimonial, index) => (
+                      <div 
+                        key={testimonial.name}
+                        ref={el => cardRefs.current[index] = el}
+                        className="w-full flex-shrink-0 snap-center px-1" 
+                      >
                            <TestimonialCard {...testimonial} />
                       </div>
                   ))}
@@ -165,10 +149,10 @@ const Testimonials: React.FC = () => {
           </div>
           
            {/* Navigation Buttons */}
-           <button onClick={prevSlide} className="absolute top-1/2 -translate-y-1/2 -left-4 sm:-left-6 lg:-left-12 p-2 bg-white rounded-full shadow-lg hover:bg-light-blue transition-colors z-10" aria-label="Depoimento anterior">
+           <button onClick={prevSlide} className="absolute top-1/2 -translate-y-1/2 -left-4 sm:-left-6 lg:-left-12 p-2 bg-white rounded-full shadow-lg hover:bg-light-blue transition-all z-10 active:scale-90" aria-label="Depoimento anterior">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <button onClick={nextSlide} className="absolute top-1/2 -translate-y-1/2 -right-4 sm:-right-6 lg:-right-12 p-2 bg-white rounded-full shadow-lg hover:bg-light-blue transition-colors z-10" aria-label="Próximo depoimento">
+            <button onClick={nextSlide} className="absolute top-1/2 -translate-y-1/2 -right-4 sm:-right-6 lg:-right-12 p-2 bg-white rounded-full shadow-lg hover:bg-light-blue transition-all z-10 active:scale-90" aria-label="Próximo depoimento">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </button>
 
@@ -177,7 +161,7 @@ const Testimonials: React.FC = () => {
                 {testimonialsData.map((_, index) => (
                     <button 
                         key={index} 
-                        onClick={() => setCurrentIndex(index)}
+                        onClick={() => scrollToCard(index)}
                         className={`w-3 h-3 rounded-full transition-all duration-300 ${currentIndex === index ? 'bg-primary scale-110' : 'bg-slate-300 hover:bg-slate-400'}`}
                         aria-label={`Ir para o depoimento ${index + 1}`}
                     />

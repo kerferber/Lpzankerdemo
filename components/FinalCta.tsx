@@ -39,7 +39,7 @@ const FinalCta: React.FC = () => {
             <div className={`mt-10 transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`} style={{transitionDelay: '400ms'}}>
               <a
                 href="#"
-                className="inline-block bg-white text-primary px-10 py-4 rounded-lg font-semibold text-xl hover:bg-light-blue transition-colors duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/80"
+                className="inline-block bg-white text-primary px-10 py-4 rounded-lg font-semibold text-xl hover:bg-light-blue transition-all duration-300 active:scale-95 focus:outline-none focus-visible:ring-4 focus-visible:ring-white/80"
               >
                 Quero ver o painel em ação.
               </a>

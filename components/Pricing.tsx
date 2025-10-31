@@ -19,21 +19,66 @@ const pricingPlans = {
     ]
 };
 
+const AnimatedPrice: React.FC<{ price: string }> = ({ price: endPriceStr }) => {
+    const endPrice = Number(endPriceStr);
+    const [displayPrice, setDisplayPrice] = useState(endPrice);
+    const animationFrameRef = useRef<number>();
+    const previousPriceRef = useRef(endPrice);
+
+    useEffect(() => {
+        const startPrice = previousPriceRef.current;
+        previousPriceRef.current = endPrice;
+
+        if (startPrice === endPrice) {
+            return;
+        }
+
+        let startTimestamp: number | null = null;
+        const duration = 400;
+
+        const animate = (timestamp: number) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const easedProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+            const value = Math.round(startPrice + (endPrice - startPrice) * easedProgress);
+            setDisplayPrice(value);
+
+            if (progress < 1) {
+                animationFrameRef.current = requestAnimationFrame(animate);
+            }
+        };
+
+        animationFrameRef.current = requestAnimationFrame(animate);
+
+        return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [endPrice]);
+
+    return (
+        <p className="text-4xl font-bold text-text-main">
+            R$ {displayPrice}<span className="text-lg font-medium text-text-secondary">/mês</span>
+        </p>
+    );
+};
+
+
 const PlanCard: React.FC<{plan: typeof pricingPlans.monthly[0]}> = ({ plan }) => (
-    <div className={`relative p-8 bg-white border rounded-xl flex flex-col ${plan.popular ? 'border-primary shadow-xl' : 'border-slate-200'}`}>
-        {plan.popular && <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-primary text-white text-sm font-semibold px-4 py-1 rounded-full">Mais Popular</div>}
+    <div className={`relative p-8 bg-white border rounded-xl flex flex-col h-full ${plan.popular ? 'border-primary shadow-xl' : 'border-slate-200'}`}>
+        {plan.popular && <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow">Mais Popular</div>}
         <h3 className="text-xl font-bold text-text-main">{plan.name}</h3>
         <p className="mt-2 text-text-secondary flex-grow">{plan.description}</p>
-        <div className="mt-6">
+        <div className="mt-6 relative h-12 flex items-center">
             {plan.price === 'Customizado' ? (
                 <p className="text-4xl font-bold text-text-main">Customizado</p>
             ) : (
-                <p className="text-4xl font-bold text-text-main">
-                    R$ {plan.price}<span className="text-lg font-medium text-text-secondary">/mês</span>
-                </p>
+                <AnimatedPrice price={plan.price} />
             )}
         </div>
-        <a href="#cta" className={`mt-8 block w-full text-center py-3 px-6 rounded-lg font-semibold transition-colors ${plan.popular ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-light-blue text-primary hover:bg-blue-200'}`}>
+        <a href="#cta" className={`mt-8 block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all active:scale-95 ${plan.popular ? 'bg-primary text-white hover:bg-primary-dark' : 'bg-light-blue text-primary hover:bg-blue-200'}`}>
             {plan.cta}
         </a>
         <ul className="mt-8 space-y-4 text-text-main">
@@ -50,9 +95,16 @@ const PlanCard: React.FC<{plan: typeof pricingPlans.monthly[0]}> = ({ plan }) =>
 
 const Pricing: React.FC = () => {
     const [billingCycle, setBillingCycle] = useState<'monthly' | 'annually'>('monthly');
-    const [activeMobileTab, setActiveMobileTab] = useState('Profissional');
+    const [activeMobilePlanIndex, setActiveMobilePlanIndex] = useState(1);
     const sectionRef = useRef<HTMLElement>(null);
+    const sliderRef = useRef<HTMLDivElement>(null);
+    const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const isScrollingProgrammatically = useRef(false);
     const [inView, setInView] = useState(false);
+    
+    useEffect(() => {
+      cardRefs.current = cardRefs.current.slice(0, pricingPlans[billingCycle].length);
+    }, [billingCycle]);
 
     useEffect(() => {
         const isMobile = window.innerWidth < 768;
@@ -71,15 +123,63 @@ const Pricing: React.FC = () => {
         }
         return () => observer.disconnect();
     }, []);
+    
+    useEffect(() => {
+        if (window.innerWidth >= 1024 || !inView || !sliderRef.current) return;
+    
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (isScrollingProgrammatically.current) return;
+    
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        const index = cardRefs.current.indexOf(entry.target as HTMLDivElement);
+                        if (index > -1) {
+                            setActiveMobilePlanIndex(index);
+                            return;
+                        }
+                    }
+                }
+            },
+            { root: sliderRef.current, threshold: 0.7 }
+        );
+    
+        const currentCardRefs = cardRefs.current;
+        currentCardRefs.forEach(card => {
+            if (card) observer.observe(card);
+        });
+    
+        return () => {
+            currentCardRefs.forEach(card => {
+                if (card) observer.unobserve(card);
+            });
+        };
+    }, [inView, billingCycle]);
+
+    const scrollToCard = (index: number) => {
+        const cardElement = cardRefs.current[index];
+        if (cardElement && sliderRef.current) {
+            isScrollingProgrammatically.current = true;
+            sliderRef.current.scrollTo({
+                left: cardElement.offsetLeft - sliderRef.current.offsetLeft,
+                behavior: 'smooth'
+            });
+            setTimeout(() => { isScrollingProgrammatically.current = false; }, 500);
+        }
+    };
+    
+    const handleTabClick = (index: number) => {
+        setActiveMobilePlanIndex(index);
+        scrollToCard(index);
+    }
 
     const plans = pricingPlans[billingCycle];
-    const activeMobilePlan = plans.find(p => p.name === activeMobileTab);
 
     return (
         <section ref={sectionRef} id="pricing" className="pt-12 pb-16 md:py-24 bg-white overflow-hidden">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-                    <p className="text-primary font-semibold tracking-wider uppercase mb-2">Planos e Preços</p>
+                    <p className="text-primary font-semibold mb-2">Planos e Preços</p>
                     <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">Escolha o plano que se encaixa no seu negócio.</h2>
                     <p className="mt-4 text-lg text-text-secondary">
                         Comece com 14 dias grátis. Cancele quando quiser.
@@ -105,25 +205,46 @@ const Pricing: React.FC = () => {
                     ))}
                 </div>
 
-                {/* Mobile Tab View */}
+                {/* Mobile Swipeable View with Tabs */}
                 <div className="mt-8 lg:hidden">
                     <div className="p-1 bg-slate-100 rounded-lg flex justify-between items-center">
-                        {plans.map(plan => (
+                        {plans.map((plan, index) => (
                              <button 
                                 key={plan.name}
-                                onClick={() => setActiveMobileTab(plan.name)}
-                                className={`w-full text-center py-2 px-1 rounded-md text-sm font-semibold transition-colors relative ${activeMobileTab === plan.name ? 'bg-primary text-white shadow' : 'text-text-secondary hover:bg-slate-200'}`}
+                                onClick={() => handleTabClick(index)}
+                                className={`w-full text-center py-2 px-1 rounded-md text-sm font-semibold transition-colors relative ${activeMobilePlanIndex === index ? 'bg-primary text-white shadow' : 'text-text-secondary hover:bg-slate-200'}`}
                              >
                                 {plan.name}
-                                {plan.popular && activeMobileTab !== plan.name && <span className="absolute -top-2 -right-2 block h-3 w-3 rounded-full bg-primary ring-2 ring-white"></span>}
+                                {plan.popular && activeMobilePlanIndex !== index && <span className="absolute -top-2 -right-2 block h-3 w-3 rounded-full bg-primary ring-2 ring-white"></span>}
                              </button>
                         ))}
                     </div>
-                    <div className="mt-4">
-                        {activeMobilePlan && <PlanCard plan={activeMobilePlan} />}
+                    <div 
+                        ref={sliderRef}
+                        className="mt-4 flex overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-hide -mx-4 px-4 gap-4"
+                        style={{scrollPadding: '0 5%'}}
+                    >
+                        {plans.map((plan, index) => (
+                            <div
+                                key={`${plan.name}-${billingCycle}`}
+                                ref={el => { cardRefs.current[index] = el; }}
+                                className="flex-shrink-0 snap-center w-[90%]"
+                            >
+                                <PlanCard plan={plan} />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="mt-6 flex justify-center space-x-2">
+                        {plans.map((_, index) => (
+                            <button 
+                                key={index} 
+                                onClick={() => handleTabClick(index)}
+                                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeMobilePlanIndex === index ? 'bg-primary scale-110' : 'bg-slate-300 hover:bg-slate-400'}`}
+                                aria-label={`Ir para o plano ${index + 1}`}
+                            />
+                        ))}
                     </div>
                 </div>
-
             </div>
         </section>
     );

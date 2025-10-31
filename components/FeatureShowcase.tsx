@@ -150,7 +150,7 @@ const FeatureShowcase: React.FC = () => {
                 key={feature.id}
                 onClick={() => setActiveFeatureId(feature.id)}
                 className={`w-full text-left p-4 rounded-lg transition-all duration-300 flex items-center gap-4 ${
-                  activeFeatureId === feature.id ? 'bg-light-blue shadow-sm' : 'hover:bg-slate-100/50'
+                  activeFeatureId === feature.id ? 'bg-light-blue shadow-sm' : 'hover:bg-slate-100/50 active:bg-slate-200/50'
                 } ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-5'}`}
                 style={{ transitionDelay: `${index * 100 + 200}ms` }}
               >
@@ -173,7 +173,7 @@ const FeatureShowcase: React.FC = () => {
               style={{ transitionDelay: '500ms', perspective: '1500px' }}
               onMouseDown={handleSwipeStart} onMouseUp={handleSwipeEnd} onMouseLeave={handleSwipeEnd} onTouchStart={handleSwipeStart} onTouchEnd={handleSwipeEnd}
             >
-              <div className="bg-slate-200/60 rounded-xl p-1.5 sm:p-2 shadow-mockup transition-all duration-500 ease-out hover:shadow-xl hover:shadow-primary/20 lg:[transform:rotateX(5deg)_rotateY(-12deg)] lg:hover:[transform:rotateX(2deg)_rotateY(-4deg)] lg:[transform-style:preserve-3d] cursor-grab active:cursor-grabbing">
+              <div className="bg-slate-200/60 rounded-xl p-1.5 sm:p-2 shadow-mockup transition-all duration-500 ease-out hover:shadow-xl hover:shadow-primary/20 lg:[transform:rotateX(5deg)_rotateY(-12deg)] lg:hover:[transform:rotateX(2deg)_rotateY(-4deg)] lg:active:[transform:rotateX(0deg)_rotateY(0deg)] lg:[transform-style:preserve-3d] cursor-grab active:cursor-grabbing">
                 <div className="h-7 sm:h-8 bg-slate-100 rounded-t-lg flex items-center px-2 sm:px-3 gap-1.5">
                   <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div><div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div><div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-slate-300 rounded-full"></div>
                 </div>

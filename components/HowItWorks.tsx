@@ -47,7 +47,7 @@ const HowItWorks: React.FC = () => {
         <section ref={sectionRef} id="how-it-works" className="py-16 md:py-24 bg-light-gray bg-dot-pattern bg-dot-pattern-size overflow-hidden">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className={`text-center max-w-3xl mx-auto transition-all duration-700 ease-out ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'}`}>
-                    <p className="text-primary font-semibold tracking-wider uppercase mb-2">Simples e Eficiente</p>
+                    <p className="text-primary font-semibold mb-2">Simples e Eficiente</p>
                     <h2 className="font-display text-3xl font-bold text-text-main tracking-normal leading-tight">Comece a usar em 3 passos simples.</h2>
                     <p className="mt-4 text-lg text-text-secondary">
                         Nossa plataforma foi desenhada para ser intuitiva, do planejamento à entrega.

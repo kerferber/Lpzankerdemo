@@ -131,7 +131,7 @@ const Header: React.FC = () => {
             <div className="flex items-center">
               {/* Desktop CTA */}
               <div className={`hidden lg:block transition-all duration-500 ease-out ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`} style={{ transitionDelay: '700ms' }}>
-                <a href="#cta" className="bg-primary text-white px-6 py-3 rounded-md font-semibold hover:bg-primary-dark transition-colors duration-200">
+                <a href="#cta" className="bg-primary text-white px-6 py-3 rounded-md font-semibold hover:bg-primary-dark transition-all duration-200 active:scale-95">
                   Ver demonstração
                 </a>
               </div>
@@ -176,14 +176,14 @@ const Header: React.FC = () => {
                   key={item.href} 
                   href={item.href}
                   onClick={handleLinkClick}
-                  className="w-full text-left text-lg font-semibold text-text-main hover:text-primary hover:bg-light-blue rounded-md py-3 px-4 transition-colors"
+                  className="w-full text-left text-lg font-semibold text-text-main hover:text-primary hover:bg-light-blue active:bg-blue-200 rounded-md py-3 px-4 transition-colors"
                  >
                    {item.label}
                  </a>
               ))}
           </nav>
           <div className="mt-8 px-4 sm:px-6">
-            <a href="#cta" onClick={handleLinkClick} className="block w-full text-center bg-primary text-white px-6 py-3 rounded-md font-semibold hover:bg-primary-dark transition-colors duration-200">
+            <a href="#cta" onClick={handleLinkClick} className="block w-full text-center bg-primary text-white px-6 py-3 rounded-md font-semibold hover:bg-primary-dark transition-all duration-200 active:scale-95">
               Ver demonstração
             </a>
           </div>
